@@ -1,0 +1,30 @@
+{
+  "name": "letsfreezethat",
+  "version": "2.2.5",
+  "description": "An utterly minimal immutability library in the spirit of immer",
+  "main": "lib/main.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loveencounterflow/letsfreezethat.git"
+  },
+  "keywords": [
+    "immutable",
+    "immutability",
+    "immer",
+    "freeze",
+    "thaw"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/loveencounterflow/letsfreezethat/issues"
+  },
+  "homepage": "https://github.com/loveencounterflow/letsfreezethat#readme",
+  "dependencies": {}
+}

@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "",
+  "sourceRoot": "",
+  "sources": [
+    "/home/flow/jzr/cnd/src/main.coffee"
+  ],
+  "names": [],
+  "mappings": "AACA;EAAA;AAAA,MAAA,IAAA,EAAA,WAAA,EAAA,CAAA,EAAA,QAAA,EAAA,GAAA,EAAA,IAAA,EAAA,GAAA,EAAA,CAAA,EAAA,KAAA;;;EAGA,QAAA,GAA4B,OAAA,CAAQ,MAAR;;EAC5B,GAAA,GAA4B,QAAQ,CAAC,QAJrC;;;EAMA,KAAA,GAA4B,MAAM,CAAC,GAAP,CAAW,KAAX;;;IAC5B,MAAM,CAAE,KAAF,IAAsB,CAAA;;;;QACb,CAAC,KAAY,IAAI,CAAC,GAAL,CAAA;;;EAC5B,WAAA,GAAqB,QAAA,CAAE,CAAF,CAAA;WAAS,CAAE,MAAM,CAAA,SAAE,CAAA,QAAQ,CAAC,IAAjB,CAAsB,CAAtB,CAAF,CAAA,KAA+B;EAAxC;;AAKrB;EAAA,KAAA,QAAA;eAAA;;;;IAAA,CAAE,IAAC,CAAE,CAAF,CAAD,GAAa,WAAA,CAAY,CAAZ,CAAH,GAAsB,CAAC,CAAC,IAAF,CAAO,IAAP,CAAtB,GAAoC,CAAhD;EAAA;;AACA;EAAA,KAAA,SAAA;;IAAA,CAAE,IAAC,CAAE,CAAF,CAAD,GAAa,WAAA,CAAY,CAAZ,CAAH,GAAsB,CAAC,CAAC,IAAF,CAAO,IAAP,CAAtB,GAAoC,CAAhD;EAAA;AAfA",
+  "sourcesContent": [
+    "\n'use strict'\n\n############################################################################################################\nnjs_util                  = require 'util'\nrpr                       = njs_util.inspect\n#...........................................................................................................\nσ_cnd                     = Symbol.for 'cnd'\nglobal[ σ_cnd ]          ?= {}\nglobal[ σ_cnd ].t0       ?= Date.now()\nis_function\t\t\t\t\t\t\t\t= ( x ) -> ( Object::toString.call x ) is '[object Function]'\n\n#===========================================================================================================\n# ACQUISITION\n#-----------------------------------------------------------------------------------------------------------\n( @[ k ] \t= if is_function v then v.bind @ else v ) for k, v of require './TRM'\n( @[ k ] \t= if is_function v then v.bind @ else v ) for k, v of require './BITSNPIECES'\n\n\n\n\n"
+  ]
+}

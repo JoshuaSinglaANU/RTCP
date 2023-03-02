@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "types.js",
+  "sourceRoot": "..",
+  "sources": [
+    "src/types.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAGA;EAAA;AAAA,MAAA,GAAA,EAAA,SAAA,EAAA,KAAA,EAAA,KAAA,EAAA,KAAA,EAAA,IAAA,EAAA,IAAA,EAAA,SAAA,EAAA,EAAA,EAAA,GAAA,EAAA,IAAA,EAAA,IAAA,EAAA,OAAA;;;EAIA,GAAA,GAA4B,OAAA,CAAQ,KAAR;;EAC5B,GAAA,GAA4B,GAAG,CAAC;;EAChC,KAAA,GAA4B;;EAC5B,KAAA,GAA4B,GAAG,CAAC,UAAJ,CAAe,OAAf,EAA4B,KAA5B;;EAC5B,KAAA,GAA4B,GAAG,CAAC,UAAJ,CAAe,OAAf,EAA4B,KAA5B;;EAC5B,OAAA,GAA4B,GAAG,CAAC,UAAJ,CAAe,SAAf,EAA4B,KAA5B;;EAC5B,IAAA,GAA4B,GAAG,CAAC,UAAJ,CAAe,MAAf,EAA4B,KAA5B;;EAC5B,IAAA,GAA4B,GAAG,CAAC,UAAJ,CAAe,MAAf,EAA4B,KAA5B;;EAC5B,IAAA,GAA4B,GAAG,CAAC,UAAJ,CAAe,MAAf,EAA4B,KAA5B;;EAC5B,IAAA,GAA4B,GAAG,CAAC,UAAJ,CAAe,MAAf,EAA4B,KAA5B;;EAC5B,EAAA,GAA4B,IAAI,CAAC;;EACjC,SAAA,GAA4B,CAAE,OAAA,CAAQ,WAAR,CAAF,CAAuB,CAAC;;EACpD,SAAA,GAA4B,IAAI,SAAJ,CAAc,MAAM,CAAC,OAArB,EAhB5B;;;EAmBA,IAAC,CAAA,OAAD,CAAS,MAAT,EAAiB,QAAA,CAAE,CAAF,CAAA;WAAS,CAAE,IAAC,CAAA,GAAG,CAAC,IAAL,CAAU,CAAV,CAAF,CAAA,IAAoB,CAAE,CAAC,CAAC,QAAF,CAAW,IAAX,CAAF;EAA7B,CAAjB;AAnBA",
+  "sourcesContent": [
+    "\n\n\n'use strict'\n\n\n############################################################################################################\nCND                       = require 'cnd'\nrpr                       = CND.rpr\nbadge                     = '明快打字机/TYPES'\ndebug                     = CND.get_logger 'debug',     badge\nalert                     = CND.get_logger 'alert',     badge\nwhisper                   = CND.get_logger 'whisper',   badge\nwarn                      = CND.get_logger 'warn',      badge\nhelp                      = CND.get_logger 'help',      badge\nurge                      = CND.get_logger 'urge',      badge\ninfo                      = CND.get_logger 'info',      badge\njr                        = JSON.stringify\nIntertype                 = ( require 'intertype' ).Intertype\nintertype                 = new Intertype module.exports\n\n#-----------------------------------------------------------------------------------------------------------\n@declare 'line', ( x ) -> ( @isa.text x ) and ( x.endsWith '\\n' )\n\n\n\n"
+  ]
+}

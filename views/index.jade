@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    title  Login Page 
+  body
+    form(action='http://localhost:40000/', method='post')
+      div
+        label Username : 
+        input(type='text' placeholder='Enter Username' name='username' required='')
+        label Password : 
+        input(type='password' placeholder='Enter Password' name='password' required='')
+        button(type='submit') Login
+  p= "Username: " + (username || "")
+  p= "Password: " + (password || "")
+  p= "Login outcome: " + (outcome || "")       

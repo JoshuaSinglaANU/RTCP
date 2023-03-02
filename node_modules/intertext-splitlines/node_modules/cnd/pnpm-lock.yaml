@@ -1,0 +1,13 @@
+lockfileVersion: 5.3
+
+specifiers:
+  jsx-number-format: ^0.1.4
+
+dependencies:
+  jsx-number-format: 0.1.4
+
+packages:
+
+  /jsx-number-format/0.1.4:
+    resolution: {integrity: sha512-uPc/Q90XqZoRE7Cu1OLFQB2cSrA2Dy8+okzPOtML8vbagNFDSipbndIPme+q0odBjEhL+wf3WH3Wo52was4Tsg==}
+    dev: false
