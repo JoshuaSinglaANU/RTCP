@@ -11,3 +11,6 @@ So far, the frameworks have been set up and decided.
 - Sequelize as an ORM to make working with the SQL database easier
 - Sqlite as the DBMS
 - Was a learning curve to have understand/integrate all the frameworks
+
+## Statement of Work
+https://1drv.ms/w/s!AsvooU5loRT1hqkLyUOF82DWOTiLPw?e=geHee2
