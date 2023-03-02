@@ -10,3 +10,4 @@ So far, the frameworks have been set up and decided.
 - ExpressJS as the back-end that handles client requests
 - Sequelize as an ORM to make working with the SQL database easier
 - Sqlite as the DBMS
+- Was a learning curve to have understand/integrate all the frameworks
