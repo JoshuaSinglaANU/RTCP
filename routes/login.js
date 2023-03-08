@@ -45,21 +45,12 @@ router.get('/', function(req, res) {
       console.log("Already logged in");
     } else {
       console.log("Not logged in");
-      // console.log(req.session);
     }
 
 })
 
 // Once the login form is posted, run this
 router.post('/', async function (req, res) {
-    if (req.session.userid) {
-      console.log("Already logged in");
-    } else {
-      console.log("Not logged in");
-      // console.log(req.session);
-    }
-
-
     // Query the server and check that the username/password pair exists
     result = await User.count({
         where: {
@@ -67,15 +58,9 @@ router.post('/', async function (req, res) {
             password: req.body.password,
         }
     })
-    // console.log("Result: " + result);
-    // res.cookie('session', req.body.username);
-    // Response once the query has been run
     if (result == 1) {
         req.session.userid = req.body.username;
-        res.render('login', {username: session.userid, password: req.body.password, outcome: 'success'});
-        // console.log(session);
-        
-
+        res.render('login', {username: session.userid, password: req.body.password, outcome: 'success'});    
     } else if (result == 0) {
         res.render('login', {username: req.body.username, password: req.body.password, outcome: 'fail'});
     } else {
