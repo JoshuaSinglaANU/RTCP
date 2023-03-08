@@ -5,7 +5,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 const sequelize = new Sequelize({
     dialect: "sqlite",
-    storage: "RTCPDatabase"
+    storage: "databases/RTCPUDB"
 })
 
 //Test the DB Connection
@@ -13,7 +13,7 @@ sequelize.authenticate()
   .then(() => console.log('Database Connected'))
   .catch(err => console.log('Error: ', err))
 
-const User = sequelize.define('User', {
+const User = sequelize.define('user', {
   // Model attributes are defined here
   username: {
     type: DataTypes.STRING,
@@ -23,6 +23,8 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING
     // allowNull defaults to true
   }
+}, {
+  tableName: 'user'
 });
 
 console.log(User === sequelize.models.User);
