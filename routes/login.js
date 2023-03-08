@@ -40,19 +40,25 @@ router.get('/', function(req, res) {
     res.render('login');
 
     session = req.session;
-    console.log(req.session);
-    if (session.userId) {
-      console.log("already logged in");
+    console.log(req.session.userid);
+    if (req.session.userid) {
+      console.log("Already logged in");
     } else {
-      console.log("not logged in");
-      console.log(req.session);
+      console.log("Not logged in");
+      // console.log(req.session);
     }
 
 })
 
 // Once the login form is posted, run this
 router.post('/', async function (req, res) {
-    console.log(req.body);
+    if (req.session.userid) {
+      console.log("Already logged in");
+    } else {
+      console.log("Not logged in");
+      // console.log(req.session);
+    }
+
 
     // Query the server and check that the username/password pair exists
     result = await User.count({
@@ -61,13 +67,13 @@ router.post('/', async function (req, res) {
             password: req.body.password,
         }
     })
-    console.log("Result: " + result);
+    // console.log("Result: " + result);
     // res.cookie('session', req.body.username);
     // Response once the query has been run
     if (result == 1) {
-        res.render('login', {username: req.body.username, password: req.body.password, outcome: 'success'});
-        session.userid = req.body.username;
-        console.log(session);
+        req.session.userid = req.body.username;
+        res.render('login', {username: session.userid, password: req.body.password, outcome: 'success'});
+        // console.log(session);
         
 
     } else if (result == 0) {

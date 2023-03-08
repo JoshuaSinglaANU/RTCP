@@ -30,9 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('trust proxy', 1) // trust first proxy
 const oneDay = 1000 * 60 * 60 * 24;
-app.use(sessions({
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
-}));
+app.use(sessions({secret: "Shh, its a secret!"}))
 
 
 app.use('/', indexRouter);
