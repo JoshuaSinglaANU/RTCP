@@ -9,7 +9,10 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index.js');
 
+var cookieSession = require('cookie-session')
 var app = express();
+
+var sessions = require('express-session')
 
 // view engine setup
 // Assigning the name 'views' to everything under /views
@@ -25,7 +28,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.set('trust proxy', 1) // trust first proxy
+const oneDay = 1000 * 60 * 60 * 24;
+app.use(sessions({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay },
+    resave: false 
+}));
+
+
 app.use('/', indexRouter);
+
+
+
+app.use(cookieSession({
+  name: 'session',
+  sameSite: 'none',
+  keys: []
+}))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
