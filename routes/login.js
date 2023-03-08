@@ -37,7 +37,17 @@ router.use(bodyParser.urlencoded({ extended: true }));
 /* GET users listing. */
 router.get('/', function(req, res) {
     // Render the 'index' jade file
-    res.render('index');
+    res.render('login');
+
+    session = req.session;
+    console.log(req.session);
+    if (session.userId) {
+      console.log("already logged in");
+    } else {
+      console.log("not logged in");
+      console.log(req.session);
+    }
+
 })
 
 // Once the login form is posted, run this
@@ -52,18 +62,16 @@ router.post('/', async function (req, res) {
         }
     })
     console.log("Result: " + result);
-    res.cookie('session', req.body.username);
+    // res.cookie('session', req.body.username);
     // Response once the query has been run
     if (result == 1) {
-        res.render('index', {username: req.body.username, password: req.body.password, outcome: 'success'});
-        console.log("Session");
-        session = req.session;
+        res.render('login', {username: req.body.username, password: req.body.password, outcome: 'success'});
         session.userid = req.body.username;
-        console.log(req.session);
+        console.log(session);
         
 
     } else if (result == 0) {
-        res.render('index', {username: req.body.username, password: req.body.password, outcome: 'fail'});
+        res.render('login', {username: req.body.username, password: req.body.password, outcome: 'fail'});
     } else {
         // render the error page
         res.render('error500');
