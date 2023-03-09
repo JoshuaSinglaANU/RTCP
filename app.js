@@ -10,6 +10,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/login.js');
 var profileRouter = require('./routes/profile.js')
 var createAccountRouter = require('./routes/createAccount.js')
+var productSearchRouter = require('./routes/productSearch.js')
 
 var cookieSession = require('cookie-session')
 var app = express();
@@ -40,6 +41,8 @@ app.use('/', indexRouter);
 app.use('/profile', profileRouter);
 
 app.use('/createAccount', createAccountRouter);
+
+app.use('/productSearch', productSearchRouter);
 
 
 
