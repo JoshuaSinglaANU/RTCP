@@ -60,10 +60,10 @@ router.get('/', async function(req, res) {
     if (req.session.userid) {
 
 
-        var query = "SELECT address, city, country, mobile FROM user, user_address WHERE user.id = user_address.id AND user.username = \"" + req.session.userid + "\"";
+        var query = "SELECT * FROM user, user_address, user_payment WHERE user.id = user_address.id AND user.id = user_payment.id AND user.username = \"" + req.session.userid + "\"";
         const [results, metadata] = await sequelize.query(query, { type: QueryTypes.SELECT })
         console.log(results)
-        res.render('profile', {username: req.session.userid, address: results.address, city: results.city, country: results.country, mobile: results.mobile});    
+        res.render('profile', {username: req.session.userid, address: results.address, city: results.city, country: results.country, mobile: results.mobile, provider: results.provider, accountNumber: results.account_no});    
     } else {
         console.log("not logged in");
         res.redirect('/');
