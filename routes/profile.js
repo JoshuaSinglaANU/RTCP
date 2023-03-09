@@ -10,49 +10,10 @@ const sequelize = new Sequelize({
 })
 
 
-
-
-
-
-// // Test the DB Connection
+// Test the DB Connection
 sequelize.authenticate()
   .then(() => console.log('Database Connected'))
   .catch(err => console.log('Error: ', err))
-
-
-
-
-
-
-// Create the model for the user payment table
-const UserPayment = sequelize.define('user_payment', {
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  address: {
-    type: DataTypes.STRING
-  }
-}, {
-  tableName: 'user_payment'
-});
-
-// Create a model for the user table
-const User = sequelize.define('user', {
-  userid: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  username: {
-    type: DataTypes.STRING
-  }
-}, {
-  tableName: 'user'
-});
-
-
-
-
 
 /* GET users listing. */
 router.get('/', async function(req, res) {
