@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const sqlite3 = require('sqlite3').verbose()
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes, QueryTypes } = require('sequelize');
 
 // Metadata for the user database
 const sequelize = new Sequelize({
@@ -61,13 +61,9 @@ router.get('/', async function(req, res) {
 
 
         var query = "SELECT address, city, country, mobile FROM user, user_address WHERE user.id = user_address.id AND user.username = \"" + req.session.userid + "\"";
-        const [results, metadata] = await sequelize.query(query)
+        const [results, metadata] = await sequelize.query(query, { type: QueryTypes.SELECT })
         console.log(results)
-
-
-
-
-        res.render('profile');
+        res.render('profile', {username: req.session.userid, address: results.address, city: results.city, country: results.country, mobile: results.mobile});    
     } else {
         console.log("not logged in");
         res.redirect('/');
