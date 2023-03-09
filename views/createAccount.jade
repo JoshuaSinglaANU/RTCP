@@ -1,0 +1,45 @@
+doctype html
+html
+  head
+    title Online HTML Editor
+  body
+    h1 Create Account
+    form(method = 'post', action='/createAccount')
+        div
+            label First name:
+            br
+            input(type='text' ,name ='firstName', placeholder='Enter first name')
+            br
+            label Surname:
+            br
+            input(type='text' ,name='surname', placeholder='Enter surname')
+            br
+            label Username:
+            br
+            input(type='text' ,name='username', placeholder='Enter username')
+            br
+            label Password:
+            br
+            input(type='password' ,name='password', placeholder='Enter password')
+            br
+            label Address:
+            br
+            input(type='text' ,name='address', placeholder='Enter address')
+            br
+            label City:
+            br
+            input(type='text' ,name='city', placeholder='Enter city')
+            br
+            label Mobile:
+            br
+            input(type='text' ,name='mobile', placeholder='Enter mobile')
+            br
+            label Payment provider:
+            br
+            input(type='text' ,name='paymentProvider', placeholder='Enter provider')
+            br
+            label Account number:
+            br
+            input(type='text' ,name='accountNumber', placeholder='Enter account number')
+            br
+            button(type='submit') Login
