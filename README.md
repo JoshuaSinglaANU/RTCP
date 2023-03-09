@@ -14,3 +14,8 @@ So far, the frameworks have been set up and decided.
 
 ## Statement of Work
 https://1drv.ms/w/s!AsvooU5loRT1hqkLyUOF82DWOTiLPw?e=geHee2
+
+## Milestones
+- The first milestone (creating a web application) was late
+- This was caused because I expected to do too much work in a short period of time
+- Should reflect on later milestones
