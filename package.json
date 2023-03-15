@@ -13,6 +13,7 @@
     "express-session": "^1.17.3",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "jquery": "^3.6.4",
     "morgan": "~1.9.1",
     "sqlite-browser": "^0.1.1"
   }

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+<body>
+<div class=”container”>
+ <br>
+ <div class=”jumbotron”>
+ <h1 class="display-4">Send Message</h1>
+ <br>
+ <input id = “name” class=”form-control” placeholder=”Name”>
+ <br>
+ <textarea id = “message” class=”form-control” placeholder="Your Message Here">
+</textarea>
+ <br>
+ <button id=”send” class=”btn btn-success”>Send</button>
+ </div>
+ <div id=”messages”>
+ 
+</div>
+</div>
+<script>
+    $(document).ready(function(){
+    $(() => {
+        console.log($("#messages").length);
+        $("#send").click(()=>{
+        sendMessage({
+            name: $("#name").val(), 
+            message:$("#message").val()});
+            })
+        getMessages()
+        })
+    });    
+    function addMessages(message){
+        console.log(message.message);
+
+   $("#messages").append("<h4>" + message.name + "</h4>" + "<p>" + message.message + "</p>")
+   }
+    
+    function getMessages(){
+    $.get('/message/messages', (data) => {
+        console.log(data);
+    data.forEach(addMessages);
+    })
+    }
+    
+    function sendMessage(message){
+    $.post('/messages', message)
+    }
+</script>
+</body>
+</html>
