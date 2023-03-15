@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="/jquery/jquery.js"></script>
 </head>
 <body>
 <div class=”container”>
@@ -20,22 +20,22 @@
  
 </div>
 </div>
+</body>
 <script>
-    $(document).ready(function(){
-    $(() => {
-        console.log($("#messages").length);
+    $( document ).ready(function(){
+        console.log($(".container").length);
+        // $("body").hide();
         $("#send").click(()=>{
+            console.log("clicked!");
         sendMessage({
             name: $("#name").val(), 
             message:$("#message").val()});
             })
         getMessages()
-        })
     });    
     function addMessages(message){
         console.log(message.message);
-
-   $("#messages").append("<h4>" + message.name + "</h4>" + "<p>" + message.message + "</p>")
+        $(".container").append("<h4>" + message.name + "</h4>" + "<p>" + message.message + "</p>")
    }
     
     function getMessages(){
@@ -49,5 +49,4 @@
     $.post('/messages', message)
     }
 </script>
-</body>
 </html>

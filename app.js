@@ -24,6 +24,8 @@ app.set('views', path.join(__dirname, 'views'));
 // Assigning the name name 'view engine' to 'jade'
 app.set('view engine', 'jade');
 
+app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
+
 // Setting up some admin stuff.
 app.use(logger('dev'));
 app.use(express.json());
