@@ -16,7 +16,8 @@ const sequelize = new Sequelize({
 router.get('/', async function(req, res) {
     // Render the 'index' jade file
     console.log("Rendering file");
-    res.sendFile('searchProducts.html', { root: "views" });
+    // res.sendFile('searchProducts.html', { root: "views" });
+    res.render("searchProducts.ejs");
 })
 
 router.get('/search', async function(req, res) {
@@ -24,7 +25,7 @@ router.get('/search', async function(req, res) {
     console.log(query);
     const [results, metadata] = await sequelize.query(query);
     console.log(results);
-    return;
+    res.send(results);
   });
 
 

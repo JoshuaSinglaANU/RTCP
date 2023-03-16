@@ -15,6 +15,7 @@ var searchProductsRouter = require('./routes/searchProducts.js')
 var cookieSession = require('cookie-session')
 var app = express();
 
+
 var sessions = require('express-session')
 
 // view engine setup
@@ -23,6 +24,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Assigning the name name 'view engine' to 'jade'
 app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 // Setting up some admin stuff.
 app.use(logger('dev'));
@@ -65,7 +67,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error500');
+  res.render('error500.jade');
 });
 
 module.exports = app;

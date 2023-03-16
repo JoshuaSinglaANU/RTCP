@@ -37,7 +37,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 /* GET users listing. */
 router.get('/', function(req, res) {
     // Render the 'index' jade file
-    res.render('login');
+    res.render('login.jade');
 
     session = req.session;
     console.log(req.session.userid);
@@ -60,9 +60,9 @@ router.post('/', async function (req, res) {
     })
     if (result == 1) {
         req.session.userid = req.body.username;
-        res.render('login', {username: session.userid, password: req.body.password, outcome: 'success'});    
+        res.render('login.jade', {username: session.userid, password: req.body.password, outcome: 'success'});    
     } else if (result == 0) {
-        res.render('login', {username: req.body.username, password: req.body.password, outcome: 'fail'});
+        res.render('login.jade', {username: req.body.username, password: req.body.password, outcome: 'fail'});
     } else {
         // render the error page
         res.render('error500');

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  </head> 
+<h2>HTML Forms</h2>
+
+<form action="/searchProducts/search">
+  <label for="pcatagory">Product catagory:</label><br>
+  <input type="text" id="pname" name="pname" value="John"><br>
+  <button id = "submit">
+</form> 
+
+
+<script>
+  $("#submit").submit(function ( data ) {
+    console.log(data);
+    console.log("YES");
+  })
+</script>
+</body>
+</html>
