@@ -10,6 +10,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/login.js');
 var profileRouter = require('./routes/profile.js')
 var createAccountRouter = require('./routes/createAccount.js')
+var searchRouter = require('./routes/search.js')
 
 var cookieSession = require('cookie-session')
 var app = express();
@@ -41,6 +42,8 @@ app.use('/profile', profileRouter);
 
 app.use('/createAccount', createAccountRouter);
 
+app.use('/search', searchRouter);
+
 
 
 // app.use(cookieSession({
@@ -57,13 +60,15 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  // res.locals.message = err.message;
+  // res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render('error500');
+  res.status(404).render("error404")
+  // res.status(500).render('error500');
 });
+
+
 
 module.exports = app;
 
