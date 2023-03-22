@@ -59,32 +59,46 @@ router.get('/', function(req, res) {
 
 // Once the login form is posted, run this
 router.post('/', async function (req, res) {
-      var T = 60000;
-      N = 5;
+      var T = 10000;
+      N = 1;
+      lockOutList = lockOutList.filter(filterLockOutList);
+
+      console.log("Filtered lockout list");
+      console.log(lockOutList);
 
       var attempts = new Map();
       var cookieVariables
       var validate;
     if (req.cookies["DEVICE"] != undefined) {
       cookieVariables = req.cookies["DEVICE"];
-      validate = ((res.cookie["DEVICE"]) == req.body.username);
+      console.log("DEVICE: " + req.cookies["DEVICE"]);
+      console.log("Username: " + req.body.username);
+      validate = ((req.cookies["DEVICE"]) === req.body.username);
     } else {
       res.cookie("DEVICE", req.body.username);
-      validate = true;
+      validate = false;
     }
-    console.log(req.cookies);
+    console.log(req.cookies["DEVICE"]);
 
-    console.log(validate);
+    
     if (validate) {
-      if (lockOutList.includes(req.cookies["DEVICE"])) {
-        console.log("includes device");
-          res.render('login', {username: req.body.username, password: req.body.password, outcome: 'username incorrect'});
+      if (checkCookie(req.cookies["DEVICE"])) {
+        deny();
+        return;
       }
     }
 
     authenticate();
 
 
+    function checkCookie (cookie) {
+      for (let i = 0; i < lockOutList.length; i++) {
+        var ll = lockOutList[i];
+        if (ll[0] == cookie) {
+          return true;
+        }
+      }
+    }
 
     async function authenticate () {
     // Query the server and check that the username/password pair exists
@@ -118,11 +132,15 @@ router.post('/', async function (req, res) {
       return (Date.now() - l[1]) < T;
     }
 
+    function filterLockOutList(ll) {
+      return (Date.now() - ll[1]) < T;
+    }
+
     function deny () {
       console.log("username password wrong");
           log.push([req.body.username, Date.now(), req.cookies["DEVICE"]])
-          log.filter(checkTime);
-          console.log(log);
+          log = log.filter(checkTime);
+          console.log(lockOutList);
           var count = 0;
           if (req.cookies["DEVICE"] != undefined) {
             for (let i = 0; i < log.length; i++) {
@@ -133,7 +151,9 @@ router.post('/', async function (req, res) {
             }
             console.log(count);
             if (count > N) {
-              lockOutList.push(req.cookies["DEVICE"]);
+              lockOutList.push([req.cookies["DEVICE"], Date.now()]);
+              res.render('login', {username: req.body.username, password: req.body.password, outcome: 'locked out'});
+              return; 
             }
           } else {
               for (let i = 0; i < log.length; i++) {
@@ -141,10 +161,17 @@ router.post('/', async function (req, res) {
                 if (l[0] === req.body.username && (Date.now() - l[1]) <= T) {
                   count++;
                 }
+
+                if (count > N) {
+                  lockOutList.push([req.cookies["DEVICE"], Date.now()]);
+                  res.render('login', {username: req.body.username, password: req.body.password, outcome: 'locked out'});
+                  return; 
+                }
               }
           }
 
-          res.render('login', {username: req.body.username, password: req.body.password, outcome: 'incorrect'}); 
+          res.render('login', {username: req.body.username, password: req.body.password, outcome: 'incorrect username/password'});
+
     }
 })
 
