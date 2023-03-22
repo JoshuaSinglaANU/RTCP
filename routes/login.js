@@ -68,9 +68,11 @@ router.post('/', async function (req, res) {
             req.session.userid = req.body.username;
             res.redirect('/?sessionID=' + req.sessionID);    
           } else {
-            res.render('login', {username: req.body.username, password: req.body.password, outcome: 'fail'});            
+            res.render('login', {username: req.body.username, password: req.body.password, outcome: 'password incorrect'});            
           }
         }); 
+    } else if (queryResult.length == 0) {
+          res.render('login', {username: req.body.username, password: req.body.password, outcome: 'username incorrect'}); 
     } else {
         // render the error page
         res.render('error500');
