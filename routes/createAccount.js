@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var bcrypt = require("bcrypt")
 const sqlite3 = require('sqlite3').verbose()
 const { Sequelize, DataTypes, QueryTypes } = require('sequelize');
 
@@ -68,7 +69,10 @@ sequelize.authenticate()
   .then(() => console.log('Database Connected'))
   .catch(err => console.log('Error: ', err))
 
-
+function hashPassword (plaintextPassword) {
+  bcrypt.hash(plaintextPassword, 10).then
+}
+  
   /* GET users listing. */
 router.get('/', async function(req, res) {
     // Render the 'index' jade file
@@ -77,7 +81,9 @@ router.get('/', async function(req, res) {
 
 // Once the login form is posted, run this
 router.post('/', async function (req, res) {
-    await User.create({username: req.body.username, password: req.body.password, first_name: req.body.firstName, last_name: req.body.surname});
+    bcrypt.hash(req.body.password, 10).then(async hash => {
+        await User.create({username: req.body.username, password: hash, first_name: req.body.firstName, last_name: req.body.surname});
+    })
     await UserAddress.create({address: req.body.address, city: req.body.city, country: req.body.country, mobile: req.body.mobile});
     await UserPayment.create({provider: req.body.paymentProvider, account_no: req.body.accountNumber});
     return;

@@ -6,13 +6,16 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "cookie-parser": "~1.4.4",
     "cookie-session": "^2.0.0",
+    "crypto": "^1.0.1",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-session": "^1.17.3",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "jsonwebtoken": "^9.0.0",
     "morgan": "~1.9.1",
     "sqlite-browser": "^0.1.1"
   }

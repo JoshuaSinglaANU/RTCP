@@ -27,7 +27,7 @@ router.get('/', async function(req, res) {
         res.render('profile', {username: req.session.userid, address: results.address, city: results.city, country: results.country, mobile: results.mobile, provider: results.provider, accountNumber: results.account_no});    
     } else {
         console.log("not logged in");
-        res.redirect('/');
+        res.redirect('/login');
     }
 })
 
