@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var session;
+var bcrypt = require("bcrypt")
 const sqlite3 = require('sqlite3').verbose()
 const { Sequelize, DataTypes } = require('sequelize');
 
@@ -27,7 +28,8 @@ const User = sequelize.define('user', {
     type: DataTypes.STRING
   }
 }, {
-  tableName: 'user'
+  tableName: 'user',
+  timestamps: false,
 });
 
 // Convert POST requests to JSON data
@@ -52,17 +54,23 @@ router.get('/', function(req, res) {
 // Once the login form is posted, run this
 router.post('/', async function (req, res) {
     // Query the server and check that the username/password pair exists
-    result = await User.count({
+    queryResult = await User.findAll({
         where: {
             username: req.body.username,
-            password: req.body.password,
         }
     })
-    if (result == 1) {
-        req.session.userid = req.body.username;
-        res.redirect('/?sessionID=' + req.sessionID)    
-    } else if (result == 0) {
-        res.render('login', {username: req.body.username, password: req.body.password, outcome: 'fail'});
+
+    if (queryResult.length == 1) {
+        var password = queryResult[0].dataValues.password;
+        // console.log("password: +" + password);
+        bcrypt.compare(req.body.password, password, function (err, result) {
+          if (result) {
+            req.session.userid = req.body.username;
+            res.redirect('/?sessionID=' + req.sessionID);    
+          } else {
+            res.render('login', {username: req.body.username, password: req.body.password, outcome: 'fail'});            
+          }
+        }); 
     } else {
         // render the error page
         res.render('error500');
