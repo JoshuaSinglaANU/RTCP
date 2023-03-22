@@ -7,9 +7,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/login.js');
+var loginRouter = require('./routes/login.js');
 var profileRouter = require('./routes/profile.js')
 var createAccountRouter = require('./routes/createAccount.js')
+var indexRouter = require('./routes/index.js')
 
 var cookieSession = require('cookie-session')
 var app = express();
@@ -34,6 +35,8 @@ app.set('trust proxy', 1) // trust first proxy
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(sessions({secret: "Shh, its a secret!"}))
 
+
+app.use('/login', loginRouter);
 
 app.use('/', indexRouter);
 

@@ -60,7 +60,7 @@ router.post('/', async function (req, res) {
     })
     if (result == 1) {
         req.session.userid = req.body.username;
-        res.render('login', {username: session.userid, password: req.body.password, outcome: 'success'});    
+        res.redirect('/?sessionID=' + req.sessionID)    
     } else if (result == 0) {
         res.render('login', {username: req.body.username, password: req.body.password, outcome: 'fail'});
     } else {
