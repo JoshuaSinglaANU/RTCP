@@ -9,6 +9,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 var lockOutList = [];
 var log = [];
+const SESSION_IDS = {};
 
 // Metadata for the user database
 const sequelize = new Sequelize({
@@ -44,7 +45,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.get('/', function(req, res) {
     // Render the 'index' jade file
     res.render('login');
-
+    req.session.userid = "test";
     session = req.session;
     console.log(req.session.userid);
 
@@ -113,6 +114,8 @@ router.post('/', async function (req, res) {
         // console.log("password: +" + password);
         bcrypt.compare(req.body.password, password, function (err, result) {
           if (result) {
+
+
             res.cookie("DEVICE", req.body.username);
             req.session.userid = req.body.username;
             res.redirect('/?sessionID=' + req.sessionID);    

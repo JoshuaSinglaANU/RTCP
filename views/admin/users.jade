@@ -1,0 +1,12 @@
+//- - each row in rows
+//-     p=row['username']
+
+table(border='1')
+    thead
+        tr: th Usernames
+            th Passwords
+    tbody
+        each row in rows
+            tr
+                td=row.username
+                td=row.password
