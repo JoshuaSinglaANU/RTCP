@@ -31,6 +31,9 @@ const User = sequelize.define('user', {
   },
   password: {
     type: DataTypes.STRING
+  },
+  admin: {
+    type: DataTypes.INTEGER
   }
 }, {
   tableName: 'user',
@@ -111,13 +114,15 @@ router.post('/', async function (req, res) {
     })      
       if (queryResult.length == 1) {
         var password = queryResult[0].dataValues.password;
-        // console.log("password: +" + password);
+        var admin = queryResult[0].dataValues.admin;
+        console.log(admin);
         bcrypt.compare(req.body.password, password, function (err, result) {
           if (result) {
 
 
             res.cookie("DEVICE", req.body.username);
             req.session.userid = req.body.username;
+            req.session.admin = admin;
             res.redirect('/?sessionID=' + req.sessionID);    
           } else {
             deny()            

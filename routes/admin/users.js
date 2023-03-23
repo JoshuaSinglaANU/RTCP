@@ -34,9 +34,14 @@ sequelize.authenticate()
 /* GET users listing. */
 router.get('/', async function(req, res) {
     var users = await User.findAll({raw: true});
-    res.render("admin/users", {
-      rows: users
-    });
+    console.log("ADMIN: " + req.session.admin);
+    if (req.session.admin == 1) {
+        res.render("admin/users", {
+        rows: users
+      });
+    } else {
+      res.redirect("/");
+    }
 })
 
 module.exports = router;  

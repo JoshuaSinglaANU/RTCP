@@ -82,7 +82,7 @@ router.get('/', async function(req, res) {
 // Once the login form is posted, run this
 router.post('/', async function (req, res) {
     bcrypt.hash(req.body.password, 10).then(async hash => {
-        await User.create({username: req.body.username, password: hash, first_name: req.body.firstName, last_name: req.body.surname});
+        await User.create({username: req.body.username, password: hash, first_name: req.body.firstName, last_name: req.body.surname, admin: 0});
     })
     await UserAddress.create({address: req.body.address, city: req.body.city, country: req.body.country, mobile: req.body.mobile});
     await UserPayment.create({provider: req.body.paymentProvider, account_no: req.body.accountNumber});
