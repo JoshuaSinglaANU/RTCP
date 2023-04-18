@@ -4,6 +4,10 @@ var bcrypt = require("bcrypt")
 const sqlite3 = require('sqlite3').verbose()
 const { Sequelize, DataTypes, QueryTypes } = require('sequelize');
 
+// variable to allow/disallow access
+var allowAccess = 0;
+
+
 // Metadata for the user database
 const sequelize = new Sequelize({
     dialect: "sqlite",
@@ -33,6 +37,13 @@ sequelize.authenticate()
 
 /* GET users listing. */
 router.get('/', async function(req, res) {
+
+  if (allowAccess == 1) {
+    var users = await User.findAll({raw: true});
+        res.render("admin/users", {
+        rows: users
+      });
+  } else if (allowAccess = 0) {
     var users = await User.findAll({raw: true});
     console.log("ADMIN: " + req.session.admin);
     if (req.session.admin == 1) {
@@ -42,6 +53,7 @@ router.get('/', async function(req, res) {
     } else {
       res.redirect("/");
     }
+  }
 })
 
 module.exports = router;  
