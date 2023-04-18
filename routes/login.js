@@ -70,16 +70,18 @@ router.post('/', async function (req, res) {
 
       if (difficulty == 1) {
           // Query the server and check that the username/password pair exists
-          result = await User.count({
+          queryResult = await User.findAll({
             where: {
                 username: req.body.username,
-                password: req.body.password,
+                password: req.body.password
             }
-        })
-        if (result == 1) {
+        })  
+        if (queryResult.length == 1) {
+            var admin = queryResult[0].dataValues.admin;
+            req.session.admin = admin;
             req.session.userid = req.body.username;
             res.render('login', {username: session.userid, password: req.body.password, outcome: 'success'});    
-        } else if (result == 0) {
+        } else if (queryResult.length == 0) {
             res.render('login', {username: req.body.username, password: req.body.password, outcome: 'fail'});
         } else {
             // render the error page

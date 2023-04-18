@@ -1,4 +1,4 @@
-const port = 40002
+const port = 40003
 
 var createError = require('http-errors');
 var express = require('express');
@@ -12,6 +12,7 @@ var profileRouter = require('./routes/user/profile.js')
 var createAccountRouter = require('./routes/createAccount.js')
 var indexRouter = require('./routes/index.js')
 var usersRouter = require('./routes/admin/users.js')
+var searchProductsRouter = require('./routes/user/searchProducts.js')
 
 var cookieSession = require('cookie-session')
 var app = express();
@@ -53,6 +54,8 @@ app.use('/profile', profileRouter);
 app.use('/createAccount', createAccountRouter);
 
 app.use('/admin/users', usersRouter);
+
+app.use('/searchProducts', searchProductsRouter);
 
 
 

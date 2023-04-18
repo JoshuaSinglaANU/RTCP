@@ -37,13 +37,13 @@ sequelize.authenticate()
 
 /* GET users listing. */
 router.get('/', async function(req, res) {
-
+  console.log("accessing user data")
   if (allowAccess == 1) {
     var users = await User.findAll({raw: true});
         res.render("admin/users", {
         rows: users
       });
-  } else if (allowAccess = 0) {
+  } else if (allowAccess == 0) {
     var users = await User.findAll({raw: true});
     console.log("ADMIN: " + req.session.admin);
     if (req.session.admin == 1) {

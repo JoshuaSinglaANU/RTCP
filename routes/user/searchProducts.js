@@ -17,7 +17,7 @@ router.get('/', async function(req, res) {
     // Render the 'index' jade file
     console.log("Rendering file");
     // res.sendFile('searchProducts.html', { root: "views" });
-    res.render("searchProducts.ejs");
+    res.render("searchProducts");
 })
 
 router.get('/search', async function(req, res) {
