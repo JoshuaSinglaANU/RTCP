@@ -1,4 +1,4 @@
-const port = 40001
+const port = 40002
 
 var createError = require('http-errors');
 var express = require('express');
@@ -8,9 +8,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var loginRouter = require('./routes/login.js');
-var profileRouter = require('./routes/profile.js')
+var profileRouter = require('./routes/user/profile.js')
 var createAccountRouter = require('./routes/createAccount.js')
 var indexRouter = require('./routes/index.js')
+var usersRouter = require('./routes/admin/users.js')
 
 var cookieSession = require('cookie-session')
 var app = express();
@@ -50,6 +51,8 @@ app.use('/', indexRouter);
 app.use('/profile', profileRouter);
 
 app.use('/createAccount', createAccountRouter);
+
+app.use('/admin/users', usersRouter);
 
 
 
