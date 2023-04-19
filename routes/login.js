@@ -15,6 +15,9 @@ const SESSION_IDS = {};
 // variable for the difficulty of breaking the login
 var difficulty = 0;
 
+// variable to all URL re-writing
+var URLRewrite = false;
+
 // Metadata for the user database
 const sequelize = new Sequelize({
     dialect: "sqlite",
@@ -77,7 +80,11 @@ router.post('/', async function (req, res) {
           var admin = results[0].admin;
           req.session.admin = admin;
           req.session.userid = req.body.username;
-          res.render('login', {username: session.userid, password: req.body.password, outcome: 'success'}); 
+          if (URLRewrite) {
+            res.redirect('/?sessionID=' + req.sessionID);
+          } else {
+            res.redirect('/');
+          }    
         } else {
           res.render('login', {username: req.body.username, password: req.body.password, outcome: 'fail'});
         }
@@ -115,7 +122,11 @@ router.post('/', async function (req, res) {
               if (result) {  
                 req.session.userid = req.body.username;
                 req.session.admin = admin;
-                res.redirect('/?sessionID=' + req.sessionID);    
+                if (URLRewrite) {
+                  res.redirect('/?sessionID=' + req.sessionID);
+                } else {
+                  res.redirect('/');
+                }   
               } else {
                 res.render('login', {username: req.body.username, password: req.body.password, outcome: 'fail'});           
               }
@@ -188,7 +199,11 @@ router.post('/', async function (req, res) {
             res.cookie("DEVICE", req.body.username);
             req.session.userid = req.body.username;
             req.session.admin = admin;
-            res.redirect('/?sessionID=' + req.sessionID);    
+            if (URLRewrite) {
+              res.redirect('/?sessionID=' + req.sessionID);
+            } else {
+              res.redirect('/');
+            }    
           } else {
             deny()            
           }
