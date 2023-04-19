@@ -13,7 +13,7 @@ const SESSION_IDS = {};
 
 
 // variable for the difficulty of breaking the login
-var difficulty = 2;
+var difficulty = 3;
 
 // variable to all URL re-writing
 var URLRewrite = false;
@@ -54,7 +54,6 @@ router.use(bodyParser.urlencoded({ extended: true }));
 /* GET users listing. */
 router.get('/', function(req, res) {
     // Render the 'index' jade file
-    res.render('login');
 
     session = req.session;
     console.log(req.session.userid);
@@ -62,8 +61,10 @@ router.get('/', function(req, res) {
 
     if (req.session.userid) {
       console.log("Already logged in");
+      res.redirect("/");
     } else {
       console.log("Not logged in");
+      res.render('login');
     }
 
 })
