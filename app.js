@@ -6,6 +6,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var serveIndex = require('serve-index')
 
 var loginRouter = require('./routes/login.js');
 var profileRouter = require('./routes/user/profile.js')
@@ -13,6 +14,7 @@ var createAccountRouter = require('./routes/createAccount.js')
 var indexRouter = require('./routes/index.js')
 var usersRouter = require('./routes/admin/users.js')
 var searchProductsRouter = require('./routes/user/searchProducts.js')
+var directoryRouter = require('./routes/admin/directory.js')
 
 var cookieSession = require('cookie-session')
 var app = express();
@@ -55,9 +57,11 @@ app.use('/createAccount', createAccountRouter);
 
 app.use('/admin/users', usersRouter);
 
+app.use('/admin/directory', directoryRouter);
+
 app.use('/searchProducts', searchProductsRouter);
 
-
+app.use('/ftp', express.static('public/ftp'), serveIndex('public/ftp', {'icons': true}))
 
 // app.use(cookieSession({
 //   name: 'session',
