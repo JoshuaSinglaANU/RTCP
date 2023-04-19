@@ -13,7 +13,7 @@ const SESSION_IDS = {};
 
 
 // variable for the difficulty of breaking the login
-var difficulty = 1;
+var difficulty = 0;
 
 // Metadata for the user database
 const sequelize = new Sequelize({
@@ -52,7 +52,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.get('/', function(req, res) {
     // Render the 'index' jade file
     res.render('login');
-    req.session.userid = "test";
+
     session = req.session;
     console.log(req.session.userid);
 
@@ -68,7 +68,20 @@ router.get('/', function(req, res) {
 // Once the login form is posted, run this
 router.post('/', async function (req, res) {
 
-      if (difficulty == 1) {
+      if (difficulty == 0) {
+        var query = "SELECT * FROM user WHERE username = '" +  req.body.username + "' AND password = '" + req.body.password + "'"
+        const [results, metadata] = await sequelize.query(query);
+
+        if (results.length >= 1) {
+          console.log(results);
+          var admin = results[0].admin;
+          req.session.admin = admin;
+          req.session.userid = req.body.username;
+          res.render('login', {username: session.userid, password: req.body.password, outcome: 'success'}); 
+        } else {
+          res.render('login', {username: req.body.username, password: req.body.password, outcome: 'fail'});
+        }
+      } else if (difficulty == 1) {
           // Query the server and check that the username/password pair exists
           queryResult = await User.findAll({
             where: {
