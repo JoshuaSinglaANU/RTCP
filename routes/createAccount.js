@@ -10,6 +10,8 @@ const sequelize = new Sequelize({
     storage: "databases/RTCPUDB"
 })
 
+var hashStrength = 2;
+
 // Test the DB Connection
 sequelize.authenticate()
   .then(() => console.log('Database Connected'))
@@ -81,12 +83,32 @@ router.get('/', async function(req, res) {
 
 // Once the login form is posted, run this
 router.post('/', async function (req, res) {
+  if (hashStrength == 1) {
+    await User.create({username: req.body.username, password:  req.body.password, first_name: req.body.firstName, last_name: req.body.surname, admin: 0});
+  } else if (hashStrength == 2) {
+    await User.create({username: req.body.username, password:  cipherRot13(req.body.password), first_name: req.body.firstName, last_name: req.body.surname, admin: 0});
+  } else if (hashStrength == 3) {
     bcrypt.hash(req.body.password, 10).then(async hash => {
         await User.create({username: req.body.username, password: hash, first_name: req.body.firstName, last_name: req.body.surname, admin: 0});
     })
+  }
     await UserAddress.create({address: req.body.address, city: req.body.city, country: req.body.country, mobile: req.body.mobile});
     await UserPayment.create({provider: req.body.paymentProvider, account_no: req.body.accountNumber});
     return;
 })
+
+function cipherRot13(str) {
+  str = str.toUpperCase();
+  return str.replace(/[A-Z]/g, rot13);
+
+  function rot13(correspondance) {
+    const charCode = correspondance.charCodeAt();
+    return String.fromCharCode(
+            ((charCode + 13) <= 90) ? charCode + 13
+                                    : (charCode + 13) % 90 + 64
+           );
+    
+  }
+}
 
 module.exports = router;

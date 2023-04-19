@@ -13,7 +13,7 @@ const SESSION_IDS = {};
 
 
 // variable for the difficulty of breaking the login
-var difficulty = 0;
+var difficulty = 2;
 
 // variable to all URL re-writing
 var URLRewrite = false;
@@ -89,7 +89,6 @@ router.post('/', async function (req, res) {
           res.render('login', {username: req.body.username, password: req.body.password, outcome: 'fail'});
         }
       } else if (difficulty == 1) {
-          // Query the server and check that the username/password pair exists
           queryResult = await User.findAll({
             where: {
                 username: req.body.username,
@@ -100,14 +99,42 @@ router.post('/', async function (req, res) {
             var admin = queryResult[0].dataValues.admin;
             req.session.admin = admin;
             req.session.userid = req.body.username;
-            res.render('login', {username: session.userid, password: req.body.password, outcome: 'success'});    
+            if (URLRewrite) {
+              res.redirect('/?sessionID=' + req.sessionID);
+            } else {
+              res.redirect('/');
+            } 
         } else if (queryResult.length == 0) {
             res.render('login', {username: req.body.username, password: req.body.password, outcome: 'fail'});
         } else {
             // render the error page
             res.render('error500');
-        }        
+        } 
       } else if (difficulty == 2) {
+          // Query the server and check that the username/password pair exists
+          queryResult = await User.findAll({
+            where: {
+                username: req.body.username,
+                password: cipherRot13(req.body.password)
+            }
+        })  
+        if (queryResult.length == 1) {
+            var admin = queryResult[0].dataValues.admin;
+            req.session.admin = admin;
+            req.session.userid = req.body.username;
+            if (URLRewrite) {
+              res.redirect('/?sessionID=' + req.sessionID);
+            } else {
+              res.redirect('/');
+            }
+        } else if (queryResult.length == 0) {
+            res.render('login', {username: req.body.username, password: req.body.password, outcome: 'fail'});
+        } else {
+            // render the error page
+            res.render('error500');
+        }          
+       
+      } else if (difficulty == 3) {
           console.log("authenticating");
           queryResult = await User.findAll({
             where: {
@@ -137,7 +164,7 @@ router.post('/', async function (req, res) {
             // render the error page
             res.render('error500');
         }        
-      } else if (difficulty == 3) {
+      } else if (difficulty == 4) {
       console.log("Heighest difficulty")  
       var T = 10000;
       N = 1;
@@ -264,6 +291,20 @@ router.post('/', async function (req, res) {
 }
 }
 )
+
+function cipherRot13(str) {
+  str = str.toUpperCase();
+  return str.replace(/[A-Z]/g, rot13);
+
+  function rot13(correspondance) {
+    const charCode = correspondance.charCodeAt();
+    return String.fromCharCode(
+            ((charCode + 13) <= 90) ? charCode + 13
+                                    : (charCode + 13) % 90 + 64
+           );
+    
+  }
+}
 
 module.exports = router;
 
