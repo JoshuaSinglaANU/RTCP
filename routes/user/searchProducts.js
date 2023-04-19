@@ -17,15 +17,20 @@ router.get('/', async function(req, res) {
     // Render the 'index' jade file
     console.log("Rendering file");
     // res.sendFile('searchProducts.html', { root: "views" });
-    res.render("searchProducts");
+    res.render("searchProducts.jade", {
+        rows: []
+    });
 })
 
 router.get('/search', async function(req, res) {
     var query = "SELECT * FROM product WHERE name = '" + req.query.pname + "' AND released = 1"
-    console.log(query);
+
+
+    // console.log(query);
     const [results, metadata] = await sequelize.query(query);
-    console.log(results);
-    res.send(results);
+    res.render("searchProducts.jade", {
+        rows : results
+    });
   });
 
 

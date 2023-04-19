@@ -1,0 +1,22 @@
+html
+  head
+  body
+    h2 HTML Forms
+    form(action='/searchProducts/search')
+      label(for='pcatagory') Product catagory:
+      br
+      input#pname(type='text' name='pname' value='John')
+      br
+      button#submit
+
+    table(border='1')
+        thead
+            tr: th ProductName
+                th Price
+                th Quantity
+        tbody
+            each row in rows
+                tr
+                    td=row.name
+                    td=row.price
+                    td=row.quantity    
