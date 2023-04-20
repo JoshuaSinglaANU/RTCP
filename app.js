@@ -6,6 +6,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var serveIndex = require('serve-index')
 
 var loginRouter = require('./routes/login.js');
 var profileRouter = require('./routes/user/profile.js')
@@ -13,6 +14,7 @@ var createAccountRouter = require('./routes/createAccount.js')
 var indexRouter = require('./routes/index.js')
 var usersRouter = require('./routes/admin/users.js')
 var searchProductsRouter = require('./routes/user/searchProducts.js')
+var directoryRouter = require('./routes/admin/directory.js')
 
 var cookieSession = require('cookie-session')
 var app = express();
@@ -31,7 +33,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('trust proxy', 1) // trust first proxy
 const oneDay = 1000 * 60 * 60 * 24;
@@ -57,7 +58,11 @@ app.use('/admin/users', usersRouter);
 
 app.use('/searchProducts', searchProductsRouter);
 
+// app.use('/admin/directory', express.static(__dirname + "/"), serveIndex(__dirname + "/public", {'icons': true}))
+app.use(express.static(path.join(__dirname, '/routes')));
+app.use('/admin/directory', express.static(__dirname + "/routes"), serveIndex(__dirname + "/routes", {'icons': true}))
 
+// app.use('/admin/directory', directoryRouter);
 
 // app.use(cookieSession({
 //   name: 'session',

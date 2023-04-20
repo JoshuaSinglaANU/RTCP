@@ -18,6 +18,7 @@
     "jade": "~1.11.0",
     "jsonwebtoken": "^9.0.0",
     "morgan": "~1.9.1",
+    "serve-index": "^1.9.1",
     "sqlite-browser": "^0.1.1"
   }
 }
