@@ -33,7 +33,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('trust proxy', 1) // trust first proxy
 const oneDay = 1000 * 60 * 60 * 24;
@@ -57,11 +56,13 @@ app.use('/createAccount', createAccountRouter);
 
 app.use('/admin/users', usersRouter);
 
-app.use('/admin/directory', directoryRouter);
-
 app.use('/searchProducts', searchProductsRouter);
 
-app.use('/ftp', express.static('public/ftp'), serveIndex('public/ftp', {'icons': true}))
+// app.use('/admin/directory', express.static(__dirname + "/"), serveIndex(__dirname + "/public", {'icons': true}))
+app.use(express.static(path.join(__dirname, '/routes')));
+app.use('/admin/directory', express.static(__dirname + "/routes"), serveIndex(__dirname + "/routes", {'icons': true}))
+
+// app.use('/admin/directory', directoryRouter);
 
 // app.use(cookieSession({
 //   name: 'session',
