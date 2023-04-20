@@ -19,4 +19,10 @@ html
     h3 Provider
     p= provider     
     h3 Account number
-    p= accountNumber     
+    p= accountNumber
+  
+  form(action='/profile/updateAvatar' enctype="multipart/form-data" method = 'post')
+    input#avatar(type='file' name='file')
+    input(type='submit')
+
+        

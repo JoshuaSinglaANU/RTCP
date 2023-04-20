@@ -18,7 +18,7 @@ var directoryRouter = require('./routes/admin/directory.js')
 
 var cookieSession = require('cookie-session')
 var app = express();
-
+var fileUpload = require('express-fileupload');
 var sessions = require('express-session')
 
 // view engine setup
@@ -46,6 +46,8 @@ app.use(sessions(
   }))
 
 
+// default options
+app.use(fileUpload());
 app.use('/login', loginRouter);
 
 app.use('/', indexRouter);
@@ -59,8 +61,15 @@ app.use('/admin/users', usersRouter);
 app.use('/searchProducts', searchProductsRouter);
 
 // app.use('/admin/directory', express.static(__dirname + "/"), serveIndex(__dirname + "/public", {'icons': true}))
-app.use(express.static(path.join(__dirname, '/routes')));
-app.use('/admin/directory', express.static(__dirname + "/routes"), serveIndex(__dirname + "/routes", {'icons': true}))
+
+// app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/public', express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
+
+
+// app.use(express.static(path.join(__dirname, '/routes')));
+// app.use('/admin/directory', express.static(__dirname + "/routes"), serveIndex(__dirname + "/routes", {'icons': true}))
 
 // app.use('/admin/directory', directoryRouter);
 
