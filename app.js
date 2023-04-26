@@ -15,6 +15,7 @@ var indexRouter = require('./routes/index.js')
 var usersRouter = require('./routes/admin/users.js')
 var searchProductsRouter = require('./routes/user/searchProducts.js')
 var directoryRouter = require('./routes/admin/directory.js')
+var updateProfileRouter = require('./routes/user/changeProfile.js')
 
 var cookieSession = require('cookie-session')
 var app = express();
@@ -41,6 +42,7 @@ app.use(sessions(
    resave: true,
    saveUninitialized: false,
    cookie: {
+    httpOnly: false,
     expires: 60000
    }
   }))
@@ -57,6 +59,8 @@ app.use('/profile', profileRouter);
 app.use('/createAccount', createAccountRouter);
 
 app.use('/admin/users', usersRouter);
+
+app.use('/updateProfile', updateProfileRouter);
 
 app.use('/searchProducts', searchProductsRouter);
 

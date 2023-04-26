@@ -122,6 +122,7 @@ router.post('/updateAvatar', function(req, res) {
       });
   } else if (difficulty == 4) {
 
+    /// Still broken
     console.log(req.files["file"].data)
     const magic = new Magic(mmm.MAGIC_MIME_TYPE);
     console.log("Made new magic")
