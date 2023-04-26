@@ -4,6 +4,8 @@ const { dirname } = require('path');
 const appDir = dirname(require.main.filename);
 const multer  = require('multer')
 const sqlite3 = require('sqlite3').verbose()
+const mime = require('mime');
+const Magic = require('mmmagic').Magic;
 const { Sequelize, DataTypes, QueryTypes } = require('sequelize');
 
 // Metadata for the user database
@@ -23,7 +25,9 @@ var storage =   multer.diskStorage({
       callback(null, file.originalname);  
     }  
 });  
-var upload = multer({ storage : storage}).single('avatar');   
+
+var upload = multer({ storage : storage}).single('avatar');
+
 // Test the DB Connection
 sequelize.authenticate()
   .then(() => console.log('Database Connected'))
@@ -59,34 +63,91 @@ router.get('/', async function(req, res) {
 })
 
 
-// router.get('/updateAvatar', async function(req, res) {
-//     console.log(req);
-//     upload(req,res,function(err) {  
-//         if(err) {  
-//             return res.end("Error uploading file.");  
-//         }  
-//         res.end("File is uploaded successfully!");  
-//     });  
-//     return;
-// });
-
+const difficulty = 4;
 router.post('/updateAvatar', function(req, res) {
-    if (!req.files || Object.keys(req.files).length === 0) {
-      return res.status(400).send('No files were uploaded.');
-    }
-  
-    console.log(req.files["avatar"]);
-    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    let sampleFile = req.files["file"];
+  if (difficulty == 1) {
+      if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+      }
+    
+      // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+      let sampleFile = req.files["file"];
 
-    // Use the mv() method to place the file somewhere on your server
-    console.log(__dirname + "/public/images/" + sampleFile.name);
+      sampleFile.mv(appDir + "/public/images/" + sampleFile.name, function(err) {
+        if (err)
+          return res.status(500).send(err);
+    
+        res.send('File uploaded!');
+      });
+  } else if (difficulty == 2) {
+    if (!req.files || Object.keys(req.files).length === 0) {
+      return res.status(400).send('No file was uploaded.');
+    }
+    // Validate file type
+  const fileExtension = req.files["file"].mimetype;
+  if (!fileExtension || !fileExtension.startsWith('image/')) {
+    return res.status(400).send('Invalid file type. Only image files are allowed.');
+  }
+
+    let sampleFile = req.files["file"];
+    // Save the file
     sampleFile.mv(appDir + "/public/images/" + sampleFile.name, function(err) {
       if (err)
         return res.status(500).send(err);
   
       res.send('File uploaded!');
     });
+  } else if (difficulty == 3) {
+
+
+      // Check if file was uploaded
+      if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No file was uploaded.');
+      }
+
+      // Validate file type
+      console.log(req.files["file"].name);
+      const mimeType = mime.lookup(req.files["file"].name);
+      if (!mimeType || !mimeType.startsWith('image/')) {
+        return res.status(400).send('Invalid file type. Only image files are allowed.');
+      }
+
+      let sampleFile = req.files["file"];
+      // Save the file
+      sampleFile.mv(appDir + "/public/images/" + sampleFile.name, function(err) {
+        if (err)
+          return res.status(500).send(err);
+    
+        res.send('File uploaded!');
+      });
+  } else if (difficulty == 4) {
+
+    console.log(req.files["file"].data)
+    const magic = new Magic(mmm.MAGIC_MIME_TYPE);
+    console.log("Made new magic")
+
+    magic.detect(req.files["file"].data, function(err, result) {
+      if (err) {
+        return res.status(500).send('Error detecting file type');
+      }
+    
+      if (!result || !result.startsWith('image/')) {
+        return res.status(400).send('Invalid file type. Only image files are allowed.');
+      }
+    
+      // file is valid, continue processing
+    });
+
+  }
+
+
+
+
+
+
+
+
+
   });
 
 module.exports = router;
