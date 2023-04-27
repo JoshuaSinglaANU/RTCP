@@ -19,6 +19,7 @@ body {
 }
 
 /* Navigation Styles */
+/* Navigation Styles */
 nav {
   background-color: #0d253f;
   color: #fff;
@@ -72,7 +73,7 @@ p {
 .btn {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #0d253f;
+  background-color: #1A1C20;
   color: #fff;
   text-decoration: none;
   border-radius: 5px;
@@ -80,5 +81,5 @@ p {
 }
 
 .btn:hover {
-  background-color: #203a56;
+  background-color: #2B2D33;
 }

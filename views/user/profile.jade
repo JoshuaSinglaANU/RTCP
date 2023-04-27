@@ -1,28 +1,43 @@
 doctype html
 html
   head
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel='stylesheet' href='../public/stylesheets/profile.css')
     title Your profile
   body
+    nav
+      ul
+        li
+          a(href='/') Home
+        li
+          a(href='/profile') Profile
+        li
+          a(href='/updateProfile') Change Profile
+        li
+          a(href='/searchProducts') Search Products
     h1 Your profile
-    h2 Account details
-    h3 Username
-    p= username 
-    h3 Address
-    p= address     
-    h3 City
-    p= city     
-    h3 Country
-    p= country     
-    h3 Mobile
-    p= mobile     
-    h2 Payment details
-    h3 Provider
-    p= provider     
-    h3 Account number
-    p= accountNumber
-  
-  form(action='/profile/updateAvatar' enctype="multipart/form-data" method = 'post')
-    input#avatar(type='file' name='file')
-    input(type='submit')
-
-        
+    div.container
+      div.row
+        div.col
+          h2 Account details
+          hr
+          h3 Username
+          p= username 
+          h3 Address
+          p= address     
+          h3 City
+          p= city     
+          h3 Country
+          p= country     
+          h3 Mobile
+          p= mobile     
+        div.col
+          h2 Payment details
+          hr
+          h3 Provider
+          p= provider     
+          h3 Account number
+          p= accountNumber
+    form(action='/profile/updateAvatar' enctype="multipart/form-data" method='post')
+      input#avatar(type='file' name='file')
+      input(type='submit')
