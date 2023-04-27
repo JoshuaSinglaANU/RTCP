@@ -16,11 +16,16 @@ var usersRouter = require('./routes/admin/users.js')
 var searchProductsRouter = require('./routes/user/searchProducts.js')
 var directoryRouter = require('./routes/admin/directory.js')
 var updateProfileRouter = require('./routes/user/changeProfile.js')
+const fs = require('fs')
+const https = require('https');
 
 var cookieSession = require('cookie-session')
 var app = express();
 var fileUpload = require('express-fileupload');
 var sessions = require('express-session')
+var ifHttps = 0;
+
+
 
 // view engine setup
 // Assigning the name 'views' to everything under /views
@@ -48,6 +53,7 @@ app.use(sessions(
   }))
 
 
+
 // default options
 app.use(fileUpload());
 app.use('/login', loginRouter);
@@ -66,22 +72,9 @@ app.use('/searchProducts', searchProductsRouter);
 
 // app.use('/admin/directory', express.static(__dirname + "/"), serveIndex(__dirname + "/public", {'icons': true}))
 
-// app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/public', express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/public'));
 
-
-// app.use(express.static(path.join(__dirname, '/routes')));
-// app.use('/admin/directory', express.static(__dirname + "/routes"), serveIndex(__dirname + "/routes", {'icons': true}))
-
-// app.use('/admin/directory', directoryRouter);
-
-// app.use(cookieSession({
-//   name: 'session',
-//   sameSite: 'none',
-//   keys: []
-// }))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -101,7 +94,20 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-// Start the app
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+if (ifHttps == 1) {
+  const options = {
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem'),
+    passphrase: '123456'
+  };
+
+  // Start HTTPS server
+  https.createServer(options, app).listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+  });
+} else {
+  // Start the app
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+  })
+}

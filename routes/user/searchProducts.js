@@ -27,7 +27,7 @@ router.get('/', async function(req, res) {
 
 router.get('/search', async function(req, res) {
 
-    if (SQLInjectionDifficulty == 0) {
+    if (SQLInjectionDifficulty == 1) {
     var query = "SELECT * FROM product WHERE name = '" + req.query.pname + "' AND released = 1"
     // var query = "SELECT * FROM product WHERE released = 1 AND name = '" + req.query.pname + "'";
     // Unreleased'-- (make sure that some product is actually unreleased)
@@ -43,7 +43,7 @@ router.get('/search', async function(req, res) {
     };
 
 
-    } else if (SQLInjectionDifficulty == 1) {
+    } else if (SQLInjectionDifficulty == 2) {
 
     // Get Data from another table
     // Step 1
