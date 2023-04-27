@@ -28,6 +28,8 @@ router.post('/', function(req, res) {
             res.send('You submitted: ' + input);
         }
         break;
+
+        // Break this by tampering with URL
         case 2: {
             var input = req.body.username;
             console.log(req.body);

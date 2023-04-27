@@ -3,7 +3,19 @@ html
   head
     meta(name='viewport' content='width=device-width, initial-scale=1')
     title  Login Page 
+    link(rel='stylesheet', href='../public/stylesheets/style.css')
   body
+    nav
+      ul
+        li
+          a(href='/') Home
+        li
+          a(href='/profile') Profile
+        li
+          a(href='/updateProfile') Change Profile
+        li
+          a(href='/searchProducts') Search Products
+
     form(action='/updateProfile', method='post')
       div
         label Username : 
