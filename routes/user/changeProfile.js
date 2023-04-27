@@ -3,7 +3,7 @@ var router = express.Router();
 const cookieParser = require('cookie-parser');
 const xss = require('xss');
 
-const difficulty = 1
+const difficulty = 2
 
 router.get('/', function(req, res) {
     res.cookie('sessionid', {
@@ -29,12 +29,9 @@ router.post('/', function(req, res) {
         }
         break;
         case 2: {
-            app.use((req, res, next) => {
-                res.setHeader('Content-Security-Policy', "default-src 'self'");
-                next();
-              });
             var input = req.body.username;
             console.log(req.body);
+            res.setHeader('Content-Security-Policy', "default-src 'self'");
             res.send('You submitted: ' + input);
         }
         break;
@@ -47,6 +44,4 @@ router.post('/', function(req, res) {
 
 })
 
-
-
-module.exports = router;
+module.exports = router
