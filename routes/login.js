@@ -13,7 +13,7 @@ const SESSION_IDS = {};
 
 
 // variable for the difficulty of breaking the login
-var difficulty = 3;
+var difficulty = 0;
 
 // variable to all URL re-writing
 var URLRewrite = false;

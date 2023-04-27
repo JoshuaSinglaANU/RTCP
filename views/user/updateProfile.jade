@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    title  Login Page 
+  body
+    form(action='/updateProfile', method='post')
+      div
+        label Username : 
+        input(type='text' placeholder='Enter Username' name='username' required='')
+        input(type='hidden' id='sessionID' value="<%= sessionId %>")  
+        button(type='submit') Login

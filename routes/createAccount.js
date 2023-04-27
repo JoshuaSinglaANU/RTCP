@@ -10,7 +10,7 @@ const sequelize = new Sequelize({
     storage: "databases/RTCPUDB"
 })
 
-var hashStrength = 3;
+var hashStrength = 1;
 
 // Test the DB Connection
 sequelize.authenticate()
