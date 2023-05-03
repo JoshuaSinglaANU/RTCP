@@ -15,7 +15,8 @@ const sequelize = new Sequelize({
 })
 
 // variable to allow/disallow Insecure Direct Object References
-var allowReference = 1;
+var obj = require('../../config.json');
+const allowReference = obj.vulnerabilities[0].Paramater_tampering;
 
 var storage =   multer.diskStorage({  
     destination: function (req, file, callback) {  
@@ -135,8 +136,6 @@ router.post('/updateAvatar', function(req, res) {
       if (!result || !result.startsWith('image/')) {
         return res.status(400).send('Invalid file type. Only image files are allowed.');
       }
-    
-      // file is valid, continue processing
     });
 
   }

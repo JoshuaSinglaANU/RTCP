@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const https = require('https');
 var session;
+var fs = require('fs');
 var bcrypt = require("bcrypt")
 var crypto = require("crypto")
 const sqlite3 = require('sqlite3').verbose()
@@ -9,7 +10,6 @@ const { Sequelize, DataTypes } = require('sequelize');
 var lockOutList = [];
 var log = [];
 const SESSION_IDS = {};
-var URLRewrite = false;
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
@@ -55,7 +55,10 @@ router.get('/', function (req, res) {
 
 // Once the login form is posted, run this
 router.post('/', async function (req, res) {
-  const difficulty = 0;
+  var obj = require('../config.json');
+  const difficulty = obj.vulnerabilities[0].SQL_Injection
+
+  var URLRewrite = obj.vulnerabilities[0].URL_rewriting;
 
   try {
     var queryResult;

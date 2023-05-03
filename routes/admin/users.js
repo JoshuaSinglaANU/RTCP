@@ -5,7 +5,8 @@ const sqlite3 = require('sqlite3').verbose()
 const { Sequelize, DataTypes, QueryTypes } = require('sequelize');
 
 // variable to allow/disallow access
-var allowAccess = 0;
+var obj = require('../../config.json');
+const allowAccess = obj.vulnerabilities[0].Admin_Console;
 
 
 // Metadata for the user database
@@ -38,12 +39,12 @@ sequelize.authenticate()
 /* GET users listing. */
 router.get('/', async function(req, res) {
   console.log("accessing user data")
-  if (allowAccess == 1) {
+  if (allowAccess) {
     var users = await User.findAll({raw: true});
         res.render("admin/users", {
         rows: users
       });
-  } else if (allowAccess == 0) {
+  } else {
     var users = await User.findAll({raw: true});
     console.log("ADMIN: " + req.session.admin);
     if (req.session.admin == 1) {

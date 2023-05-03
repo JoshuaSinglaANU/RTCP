@@ -1,7 +1,14 @@
 {
   "vulnerabilities": [
     {
-      "street": 1
+      "SQL_Injection": 1,
+      "URL_rewriting": true,
+      "Authentication": 0,
+      "XSS": 1,
+      "Paramater_tampering": 0,
+      "Admin_Console": true,
+      "Directory_Listing": false,
+      "SSL": false
     }
   ]
 }

@@ -23,7 +23,6 @@ var cookieSession = require('cookie-session')
 var app = express();
 var fileUpload = require('express-fileupload');
 var sessions = require('express-session')
-var ifHttps = 0;
 
 
 
@@ -70,7 +69,14 @@ app.use('/updateProfile', updateProfileRouter);
 
 app.use('/searchProducts', searchProductsRouter);
 
-// app.use('/admin/directory', express.static(__dirname + "/"), serveIndex(__dirname + "/public", {'icons': true}))
+var obj = require('./config.json');
+const allowDirectoryListing = obj.vulnerabilities[0].Directory_Listing;
+
+if (allowDirectoryListing) {
+  app.use('/admin/directory', express.static(__dirname + "/"), serveIndex(__dirname + "/public", {'icons': true}))
+} else {
+  app.use('/admin/directory', loginRouter)
+}
 
 app.use('/public', express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/public'));
@@ -94,7 +100,9 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-if (ifHttps == 1) {
+const ifHttps = obj.vulnerabilities[0].SSL;
+
+if (ifHttps) {
   const options = {
     key: fs.readFileSync('key.pem'),
     cert: fs.readFileSync('cert.pem'),
