@@ -19,12 +19,23 @@ var answerRouter = require('./routes/answer.js')
 var updateProfileRouter = require('./routes/user/changeProfile.js')
 const fs = require('fs')
 const https = require('https');
+const { Sequelize, DataTypes } = require('sequelize');
 
 var app = express();
 var fileUpload = require('express-fileupload');
 var sessions = require('express-session')
 
+const sequelize = new Sequelize({
+  dialect: "sqlite",
+  storage: "databases/RTCPUDB"
+})
 
+// Test the DB Connection
+sequelize.authenticate()
+  .then(() => console.log('Database Connected'))
+  .catch(err => console.log('Error: ', err))
+
+createQuestionsAndAnswers ();
 
 // view engine setup
 // Assigning the name 'views' to everything under /views
@@ -124,4 +135,57 @@ if (ifHttps) {
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
   })
+}
+
+function createQuestionsAndAnswers () {
+
+  var questions_and_solutions = {
+    vulnerabilities: {
+      SQL_Injection: {
+        Difficulty: [
+          [
+            "How many products are there in total?",
+            "How many unreleased products are there?",
+            "What is the total quantity of the unreleased products?",
+            "What is the most expensive product?",
+            "What is the total price of the inventory?"
+          ],
+          [
+            "How many total users are there?",
+            "What is the password for the admin user, as stored in the server database?",
+            "How many tables does the server database have?",
+            "What is the street address of the admin?",
+            "What is the provider number for the admin?",
+            "What is the mobile number of the admin?",
+            "What is the city of the admin?"
+          ]
+        ],
+        URL_rewriting: [
+          [
+            "What is the current sessionID?",
+            "What is the length of the current sessionID?",
+            "How many numerals are there in the current sessionID?"
+          ]
+        ]
+      },
+      Authentication: [
+        "What is the password for the admin user, as stored in the server database?",
+        "What is the address of the admin?",
+        "What is the provider number for the admin?",
+        "What is the street address of the admin?",
+        "What is the mobile number of the admin?",
+        "What is the city of the admin?"
+      ]
+    }
+  }
+  const json = JSON.stringify(questions_and_solutions, null, 2);
+
+  fs.writeFile('questions.json', json, (err) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.log('JSON data has been written to file');
+  });
+  
 }
