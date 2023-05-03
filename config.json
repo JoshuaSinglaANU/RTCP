@@ -1,13 +1,13 @@
 {
   "vulnerabilities": [
     {
-      "SQL_Injection": 1,
+      "SQL_Injection": 2,
       "URL_rewriting": true,
       "Authentication": 0,
       "XSS": 1,
-      "Paramater_tampering": 0,
+      "Paramater_tampering": 1,
       "Admin_Console": true,
-      "Directory_Listing": false,
+      "Directory_Listing": true,
       "SSL": false
     }
   ]

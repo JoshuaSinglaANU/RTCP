@@ -56,7 +56,7 @@ router.get('/', function (req, res) {
 // Once the login form is posted, run this
 router.post('/', async function (req, res) {
   var obj = require('../config.json');
-  const difficulty = obj.vulnerabilities[0].SQL_Injection
+  const difficulty = obj.vulnerabilities[0].Authentication;
 
   var URLRewrite = obj.vulnerabilities[0].URL_rewriting;
 
