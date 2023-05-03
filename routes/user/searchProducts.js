@@ -6,7 +6,8 @@ const sqlite3 = require('sqlite3').verbose()
 const { Sequelize, DataTypes } = require('sequelize');
 
 // Variable for the SQL injection difficulty
-var SQLInjectionDifficulty = 1;
+var obj = require('../../config.json');
+const SQLInjectionDifficulty = obj.vulnerabilities[0].SQL_Injection
 
 // Metadata for the user database
 const sequelize = new Sequelize({
@@ -47,10 +48,10 @@ router.get('/search', async function(req, res) {
 
     // Get Data from another table
     // Step 1
-    // SELECT name, price, quantity FROM product WHERE released = 1 AND name = '' UNION SELECT type, name, tbl_name FROM sqlite_master --'
+    // ' UNION SELECT type, name, tbl_name FROM sqlite_master --'
 
     // Step 2
-    // SELECT name, price, quantity FROM product WHERE released = 1 AND name = '' UNION SELECT username, password, password FROM user --'   
+    // ' UNION SELECT username, password, password FROM user --'   
 
     // solution
     // ' UNION SELECT username, password, password FROM user --
