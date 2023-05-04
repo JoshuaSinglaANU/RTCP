@@ -1,4 +1,4 @@
-const port = 40005
+const port = 40006
 
 var createError = require('http-errors');
 var express = require('express');
@@ -140,76 +140,107 @@ if (ifHttps) {
   })
 }
 
-function createQuestionsAndAnswers () {
+async function createQuestionsAndAnswers () {
+
+  var randomUser = await select_random_user();
 
   var questions_and_solutions = {
     vulnerabilities: {
       SQL_Injection: {
         Difficulty: [
-          {
-            question: "How many products are there in total?",
-            answer: ""
-          },
-          {
-            question: "How many unreleased products are there?",
-            answer: ""
-          },
-          {
-            question: "What is the total quantity of the unreleased products?",
-            answer: ""
-          },
-          {
-            question: "What is the most expensive product?",
-            answer: ""
-          },
-          {
-            question: "What is the total price of the inventory?",
-            answer: ""
-          }
+          [
+            {
+              question: `How many products are there in total?`,
+              answer: `${randomUser.last_name}`
+            },
+            {
+              question: `How many unreleased products are there?`,
+              answer: `${randomUser.last_name}`
+            },
+            {
+              question: `What is the total quantity of the unreleased products?`,
+              answer: `${randomUser.last_name}`
+            },
+            {
+              question: `What is the most expensive product?`,
+              answer: `${randomUser.last_name}`
+            },
+            {
+              question: `What is the total price of the inventory?`,
+              answer: `${randomUser.last_name}`
+            }
+          ],
+          [
+            {
+              question: `How many total users are there?`,
+              answer: `${randomUser.last_name}`
+            },
+            {
+              question: `What is the password for the admin user, as stored in the server database?`,
+              answer: `${randomUser.last_name}`
+            },
+            {
+              question: `What is the street address of the admin?`,
+              answer: `${randomUser.last_name}`
+            },
+            {
+              question: `What is the mobile number of the admin?`,
+              answer: `${randomUser.last_name}`
+            },
+            {
+              question: `What is the city of the admin?`,
+              answer: `${randomUser.last_name}`
+            }
+          ]
         ],
         URL_rewriting: [
           {
-            question: "What is the current sessionID?",
-            answer: ""
+            question: `What is the current sessionID?`,
+            answer: `${randomUser.last_name}`
           },
           {
-            question: "What is the length of the current sessionID?",
-            answer: ""
+            question: `What is the last name ${randomUser.first_name}`,
+            answer: `${randomUser.last_name}`
           },
           {
-            question: "How many numerals are there in the current sessionID?",
-            answer: ""
+            question: `What is the length of the current sessionID?`,
+            answer: `${randomUser.last_name}`
+          },
+          {
+            question: `How many numerals are there in the current sessionID?`,
+            answer: `${randomUser.last_name}`
           }
         ]
       },
       Authentication: [
         {
-          question: "What is the password for the admin user, as stored in the server database?",
-          answer: ""
+          question: `What is the password for the admin user, as stored in the server database?`,
+          answer: `${randomUser.last_name}`
         },
         {
-          question: "What is the address of the admin?",
-          answer: ""
+          question: `What is the address of the admin?`,
+          answer: `${randomUser.last_name}`
         },
         {
-          question: "What is the provider number for the admin?",
-          answer: ""
+          question: `What is the provider number for the admin?`,
+          answer: `${randomUser.last_name}`
         },
         {
-          question: "What is the street address of the admin?",
-          answer: ""
+          question: `What is the street address of the admin?`,
+          answer: `${randomUser.last_name}`
         },
         {
-          question: "What is the mobile number of the admin?",
-          answer: ""
+          question: `What is the mobile number of the admin?`,
+          answer: `${randomUser.last_name}`
         },
         {
-          question: "What is the city of the admin?",
-          answer: ""
+          question: `What is the city of the admin?`,
+          answer: `${randomUser.last_name}`
         }
       ]
     }
   };
+  
 
   
   const json = JSON.stringify(questions_and_solutions, null, 2);
@@ -318,4 +349,51 @@ function cipherRot13(str) {
     );
 
   }
+}
+
+async function select_random_user () {
+  const User = sequelize.define('user', {
+    username: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    password: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    first_name: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    last_name: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    admin: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    }
+  }, {
+    tableName: 'user',
+    timestamps: false
+  });
+
+  try {
+    // Count the number of users in the database
+    const count = await User.count();
+    // Generate a random offset between 0 and count - 1
+    const offset = Math.floor(Math.random() * count);
+    // Find a random user using the offset and return it
+    const randomUser = await User.findOne({
+      offset: offset,
+      order: [Sequelize.literal('random()')]
+    });
+    console.log('Random user:', randomUser.dataValues);
+
+    return randomUser.dataValues;
+
+  } catch (err) {
+    console.error(err);
+  }
+  
 }

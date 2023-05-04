@@ -2,66 +2,94 @@
   "vulnerabilities": {
     "SQL_Injection": {
       "Difficulty": [
-        {
-          "question": "How many products are there in total?",
-          "answer": ""
-        },
-        {
-          "question": "How many unreleased products are there?",
-          "answer": ""
-        },
-        {
-          "question": "What is the total quantity of the unreleased products?",
-          "answer": ""
-        },
-        {
-          "question": "What is the most expensive product?",
-          "answer": ""
-        },
-        {
-          "question": "What is the total price of the inventory?",
-          "answer": ""
-        }
+        [
+          {
+            "question": "How many products are there in total?",
+            "answer": "kkhjaz"
+          },
+          {
+            "question": "How many unreleased products are there?",
+            "answer": "kkhjaz"
+          },
+          {
+            "question": "What is the total quantity of the unreleased products?",
+            "answer": "kkhjaz"
+          },
+          {
+            "question": "What is the most expensive product?",
+            "answer": "kkhjaz"
+          },
+          {
+            "question": "What is the total price of the inventory?",
+            "answer": "kkhjaz"
+          }
+        ],
+        [
+          {
+            "question": "How many total users are there?",
+            "answer": "kkhjaz"
+          },
+          {
+            "question": "What is the password for the admin user, as stored in the server database?",
+            "answer": "kkhjaz"
+          },
+          {
+            "question": "What is the street address of the admin?",
+            "answer": "kkhjaz"
+          },
+          {
+            "question": "What is the mobile number of the admin?",
+            "answer": "kkhjaz"
+          },
+          {
+            "question": "What is the city of the admin?",
+            "answer": "kkhjaz"
+          }
+        ]
       ],
       "URL_rewriting": [
         {
           "question": "What is the current sessionID?",
-          "answer": ""
+          "answer": "kkhjaz"
+        },
+        {
+          "question": "What is the last name 14ag4u",
+          "answer": "kkhjaz"
         },
         {
           "question": "What is the length of the current sessionID?",
-          "answer": ""
+          "answer": "kkhjaz"
         },
         {
           "question": "How many numerals are there in the current sessionID?",
-          "answer": ""
+          "answer": "kkhjaz"
         }
       ]
     },
     "Authentication": [
       {
         "question": "What is the password for the admin user, as stored in the server database?",
-        "answer": ""
+        "answer": "kkhjaz"
       },
       {
         "question": "What is the address of the admin?",
-        "answer": ""
+        "answer": "kkhjaz"
       },
       {
         "question": "What is the provider number for the admin?",
-        "answer": ""
+        "answer": "kkhjaz"
       },
       {
         "question": "What is the street address of the admin?",
-        "answer": ""
+        "answer": "kkhjaz"
       },
       {
         "question": "What is the mobile number of the admin?",
-        "answer": ""
+        "answer": "kkhjaz"
       },
       {
         "question": "What is the city of the admin?",
-        "answer": ""
+        "answer": "kkhjaz"
       }
     ]
   }
