@@ -88,7 +88,7 @@ app.use('/searchProducts', searchProductsRouter);
 var obj = require('./config.json');
 const allowDirectoryListing = obj.vulnerabilities[0].Directory_Listing;
 const encryptionLevel = obj.vulnerabilities[0].Authentication;
-populateUserAccounts ();
+
 
 if (allowDirectoryListing) {
   app.use('/admin/directory', express.static(__dirname + "/"), serveIndex(__dirname + "/public", {'icons': true}))
@@ -140,9 +140,95 @@ if (ifHttps) {
   })
 }
 
+const Product = sequelize.define('product', {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  price: {
+    type: DataTypes.FLOAT,
+    allowNull: false
+  },
+  quantity: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  released: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+}, {
+  tableName: 'product',
+  timestamps: false
+});
+
+const User = sequelize.define('user', {
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  first_name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  last_name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  admin: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  }
+}, {
+  tableName: 'user',
+  timestamps: false
+});
+
+const UserAddress = sequelize.define('user_address', {
+  address: {
+    type: DataTypes.STRING,
+  },
+  city: {
+    type: DataTypes.STRING
+  },
+  country: {
+    type: DataTypes.STRING
+  }
+}, {
+  tableName: 'user_address',
+  timestamps: false
+});
+
+const UserPayment = sequelize.define('user_payment', {
+  provider: {
+    type: DataTypes.STRING,
+  },
+  account_no: {
+    type: DataTypes.STRING
+  }
+}, {
+  tableName: 'user_payment',
+  timestamps: false
+});  
+
+
 async function createQuestionsAndAnswers () {
 
   var randomUser = await select_random_user();
+
+  var numUnseleasedProducts = await count_unreleased_products ();
+
+  var numUnseleasedProductsQuantity = await count_unreleased_products_quantity ();
+
+  var mostExpensiveProduct = await getMostExpensiveProduct();
+
+  var totalPrice = await getTotalPrice();
+
+  var numUsers = getNumUsers();
 
   var questions_and_solutions = {
     vulnerabilities: {
@@ -155,32 +241,32 @@ async function createQuestionsAndAnswers () {
             },
             {
               question: `How many unreleased products are there?`,
-              answer: `${randomUser.last_name}`
+              answer: `${numUnseleasedProducts}`
             },
             {
               question: `What is the total quantity of the unreleased products?`,
-              answer: `${randomUser.last_name}`
+              answer: `${numUnseleasedProductsQuantity}`
             },
             {
               question: `What is the most expensive product?`,
-              answer: `${randomUser.last_name}`
+              answer: `${mostExpensiveProduct}`
             },
             {
               question: `What is the total price of the inventory?`,
-              answer: `${randomUser.last_name}`
+              answer: `${totalPrice}`
             }
           ],
           [
             {
               question: `How many total users are there?`,
-              answer: `${randomUser.last_name}`
+              answer: `${numUsers}`
             },
             {
-              question: `What is the password for the admin user, as stored in the server database?`,
-              answer: `${randomUser.last_name}`
+              question: `What is the password for the ${randomUser.username}, as stored in the server database?`,
+              answer: `${randomUser.password}`
             },
             {
-              question: `What is the street address of the admin?`,
+              question: `What is the street address of ${randomUser.username}?`,
               answer: `${randomUser.last_name}`
             },
             {
@@ -256,33 +342,6 @@ async function createQuestionsAndAnswers () {
 }
 
 async function populateUserAccounts () {
-  // Define the User model
-const User = sequelize.define('user', {
-  username: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  first_name: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  last_name: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  admin: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  }
-}, {
-  tableName: 'user',
-  timestamps: false
-});
-
 try {
   // Delete all users from the database
   await User.destroy({
@@ -299,6 +358,7 @@ try {
 try {
   const numUsers = 10;
   const users = [];
+  const userAddresses = [];
   const passwordPromises = [];
   for (let i = 0; i < numUsers; i++) {
     const username = Math.random().toString(36).substring(2, 8);
@@ -314,19 +374,34 @@ try {
         passwordPromises.push(Promise.resolve(cipherRot13(password)));
         break;
       case 3:
+        passwordPromises.push(bcrypt.hash(password, 10));
+        break;
       default:
         passwordPromises.push(bcrypt.hash(password, 10));
         break;
     }
+
+
     const first_name = Math.random().toString(36).substring(2, 8);
     const last_name = Math.random().toString(36).substring(2, 8);
     const admin = 0;
     const user = { username, password, first_name, last_name, admin };
     users.push(user);
+
+    const address = Math.random().toString(36).substring(2, 8);
+    const city = Math.random().toString(36).substring(2, 8);
+    const country = Math.random().toString(36).substring(2, 8);
+    const mobile = Math.random().toString(36).substring(2, 8);
+    const provider = Math.random().toString(36).substring(2, 8);
+    const accountNumber = Math.random().toString(36).substring(2, 8);
+    userAddresses.push({address, city, country, mobile});
+
   }
+  console.log(userAddresses);
   const hashedPasswords = await Promise.all(passwordPromises);
   for (let i = 0; i < numUsers; i++) {
     const user = await User.create({ ...users[i], password: hashedPasswords[i] });
+    await UserAddress.create(userAddresses[i]);
     users[i] = user;
   }
 } catch (err) {
@@ -397,3 +472,73 @@ async function select_random_user () {
   }
   
 }
+
+async function count_unreleased_products () {
+  return Product.count({
+    where: {
+      released: 0
+    }
+  })
+    .then(count => {
+      console.log("Num released products " + count)
+      return count;
+    })
+    .catch(error => {
+      console.error(`Error counting released products: ${error.message}`);
+    });
+}
+
+async function count_unreleased_products_quantity () {
+  return Product.sum('quantity', {
+    where: {
+      released: 0
+    }
+  })
+    .then(total => {
+      return total;
+    })
+    .catch(error => {
+      console.error(`Error finding total quantity of unreleased products: ${error.message}`);
+    });
+}
+
+async function getTotalPrice () {
+  return Product.sum('quantity')
+    .then(total => {
+      return total;
+    })
+    .catch(error => {
+      console.error(`Error finding total price of unreleased products: ${error.message}`);
+    });
+}
+
+function getMostExpensiveProduct() {
+  return Product.findOne({
+    where: {
+      price: {
+        [Sequelize.Op.eq]: Sequelize.literal(`(SELECT MAX(price) FROM product)`)
+      }
+    }
+  })
+    .then(product => {
+      return product.price;
+    })
+    .catch(error => {
+      console.error(`Error finding most expensive product: ${error.message}`);
+    });
+}
+
+async function getNumUsers () {
+  return User.count()
+    .then(count => {
+      console.log("Num users " + count)
+      return count;
+    })
+    .catch(error => {
+      console.error(`Error counting num users: ${error.message}`);
+    });
+}
+
+
+
+populateUserAccounts ();

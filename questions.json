@@ -5,91 +5,91 @@
         [
           {
             "question": "How many products are there in total?",
-            "answer": "kkhjaz"
+            "answer": "bt3kge"
           },
           {
             "question": "How many unreleased products are there?",
-            "answer": "kkhjaz"
+            "answer": "0"
           },
           {
             "question": "What is the total quantity of the unreleased products?",
-            "answer": "kkhjaz"
+            "answer": "null"
           },
           {
             "question": "What is the most expensive product?",
-            "answer": "kkhjaz"
+            "answer": "10"
           },
           {
             "question": "What is the total price of the inventory?",
-            "answer": "kkhjaz"
+            "answer": "1"
           }
         ],
         [
           {
             "question": "How many total users are there?",
-            "answer": "kkhjaz"
+            "answer": "[object Promise]"
           },
           {
-            "question": "What is the password for the admin user, as stored in the server database?",
-            "answer": "kkhjaz"
+            "question": "What is the password for the az2w7y, as stored in the server database?",
+            "answer": "gu548c"
           },
           {
-            "question": "What is the street address of the admin?",
-            "answer": "kkhjaz"
+            "question": "What is the street address of az2w7y?",
+            "answer": "bt3kge"
           },
           {
             "question": "What is the mobile number of the admin?",
-            "answer": "kkhjaz"
+            "answer": "bt3kge"
           },
           {
             "question": "What is the city of the admin?",
-            "answer": "kkhjaz"
+            "answer": "bt3kge"
           }
         ]
       ],
       "URL_rewriting": [
         {
           "question": "What is the current sessionID?",
-          "answer": "kkhjaz"
+          "answer": "bt3kge"
         },
         {
-          "question": "What is the last name 14ag4u",
-          "answer": "kkhjaz"
+          "question": "What is the last name 9tkzc7",
+          "answer": "bt3kge"
         },
         {
           "question": "What is the length of the current sessionID?",
-          "answer": "kkhjaz"
+          "answer": "bt3kge"
         },
         {
           "question": "How many numerals are there in the current sessionID?",
-          "answer": "kkhjaz"
+          "answer": "bt3kge"
         }
       ]
     },
     "Authentication": [
       {
         "question": "What is the password for the admin user, as stored in the server database?",
-        "answer": "kkhjaz"
+        "answer": "bt3kge"
       },
       {
         "question": "What is the address of the admin?",
-        "answer": "kkhjaz"
+        "answer": "bt3kge"
       },
       {
         "question": "What is the provider number for the admin?",
-        "answer": "kkhjaz"
+        "answer": "bt3kge"
       },
       {
         "question": "What is the street address of the admin?",
-        "answer": "kkhjaz"
+        "answer": "bt3kge"
       },
       {
         "question": "What is the mobile number of the admin?",
-        "answer": "kkhjaz"
+        "answer": "bt3kge"
       },
       {
         "question": "What is the city of the admin?",
-        "answer": "kkhjaz"
+        "answer": "bt3kge"
       }
     ]
   }

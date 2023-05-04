@@ -3,7 +3,7 @@ const fs = require('fs');
 const config = {
   vulnerabilities: [
     {
-      SQL_Injection: 2,
+      SQL_Injection: 1,
       URL_rewriting: 1,
       Authentication: 0,
       XSS: 1,
