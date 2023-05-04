@@ -46,7 +46,7 @@ function generateFormFields (formFields) {
     }
 
     const AuthenticationDifficulty = difficulties.vulnerabilities[0].Authentication;
-    if (AuthenticationDifficulty <= 4) {
+    if (AuthenticationDifficulty < 4) {
         authenticationQuestions = questions.vulnerabilities.Authentication;
         questionPool = questionPool.concat(authenticationQuestions);
     }

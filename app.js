@@ -270,15 +270,15 @@ async function createQuestionsAndAnswers () {
             },
             {
               question: `What is the street address of ${randomUser.username}?`,
-              answer: `${randomUser.last_name}`
+              answer: `${randomUser.address}`
             },
             {
               question: `What is the mobile number of the admin?`,
-              answer: `${randomUser.last_name}`
+              answer: `${randomUser.mobile}`
             },
             {
               question: `What is the city of the admin?`,
-              answer: `${randomUser.last_name}`
+              answer: `${randomUser.city}`
             }
           ]
         ],
@@ -456,50 +456,28 @@ function cipherRot13(str) {
 }
 
 async function select_random_user () {
-  const User = sequelize.define('user', {
-    username: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    password: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    first_name: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    last_name: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    admin: {
-      type: Sequelize.INTEGER,
-      allowNull: false
-    }
-  }, {
-    tableName: 'user',
-    timestamps: false
-  });
-
   try {
-    // Count the number of users in the database
+    // Get a count of all users
     const count = await User.count();
-    // Generate a random offset between 0 and count - 1
-    const offset = Math.floor(Math.random() * count);
-    // Find a random user using the offset and return it
-    const randomUser = await User.findOne({
-      offset: offset,
-      order: [Sequelize.literal('random()')]
+
+    // Generate a random index within the range of the user count
+    const randomIndex = Math.floor(Math.random() * count);
+
+    // Find a random user based on the index
+    const user = await User.findOne({
+      offset: randomIndex,
+      include: [
+        { model: UserAddress },
+        { model: UserPayment }
+      ]
     });
-    console.log('Random user:', randomUser.dataValues);
 
-    return randomUser.dataValues;
-
+    // Return the user object with associated address and payment details
+    return user.toJSON();
   } catch (err) {
     console.error(err);
+    throw err;
   }
-  
 }
 
 async function count_unreleased_products () {
@@ -567,6 +545,7 @@ async function getNumUsers () {
       console.error(`Error counting num users: ${error.message}`);
     });
 }
+
 populateUserAccounts ();
 
 function generateRandomNumber() {
