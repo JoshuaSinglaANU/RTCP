@@ -197,6 +197,9 @@ const UserAddress = sequelize.define('user_address', {
   },
   country: {
     type: DataTypes.STRING
+  },
+  mobile: {
+    type: DataTypes.INTEGER
   }
 }, {
   tableName: 'user_address',
@@ -353,6 +356,17 @@ try {
   console.error(err);
 }
 
+try {
+  // Delete all users from the database
+  await UserAddress.destroy({
+    where: {},
+    truncate: true
+  });
+  console.log('User Address emptied.');
+} catch (err) {
+  console.error(err);
+}
+
 
 
 try {
@@ -391,7 +405,7 @@ try {
     const address = Math.random().toString(36).substring(2, 8);
     const city = Math.random().toString(36).substring(2, 8);
     const country = Math.random().toString(36).substring(2, 8);
-    const mobile = Math.random().toString(36).substring(2, 8);
+    const mobile = generateRandomNumber();
     const provider = Math.random().toString(36).substring(2, 8);
     const accountNumber = Math.random().toString(36).substring(2, 8);
     userAddresses.push({address, city, country, mobile});
@@ -538,7 +552,13 @@ async function getNumUsers () {
       console.error(`Error counting num users: ${error.message}`);
     });
 }
-
-
-
 populateUserAccounts ();
+
+function generateRandomNumber() {
+  const min = 1000000000;
+  const max = 9999999999;
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+console.log(generateRandomNumber());
+

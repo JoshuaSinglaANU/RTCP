@@ -5,7 +5,7 @@
         [
           {
             "question": "How many products are there in total?",
-            "answer": "bt3kge"
+            "answer": "2luywx"
           },
           {
             "question": "How many unreleased products are there?",
@@ -30,66 +30,66 @@
             "answer": "[object Promise]"
           },
           {
-            "question": "What is the password for the az2w7y, as stored in the server database?",
-            "answer": "gu548c"
+            "question": "What is the password for the gy86mi, as stored in the server database?",
+            "answer": "08nipy"
           },
           {
-            "question": "What is the street address of az2w7y?",
-            "answer": "bt3kge"
+            "question": "What is the street address of gy86mi?",
+            "answer": "2luywx"
           },
           {
             "question": "What is the mobile number of the admin?",
-            "answer": "bt3kge"
+            "answer": "2luywx"
           },
           {
             "question": "What is the city of the admin?",
-            "answer": "bt3kge"
+            "answer": "2luywx"
           }
         ]
       ],
       "URL_rewriting": [
         {
           "question": "What is the current sessionID?",
-          "answer": "bt3kge"
+          "answer": "2luywx"
         },
         {
-          "question": "What is the last name 9tkzc7",
-          "answer": "bt3kge"
+          "question": "What is the last name j3qd2r",
+          "answer": "2luywx"
         },
         {
           "question": "What is the length of the current sessionID?",
-          "answer": "bt3kge"
+          "answer": "2luywx"
         },
         {
           "question": "How many numerals are there in the current sessionID?",
-          "answer": "bt3kge"
+          "answer": "2luywx"
         }
       ]
     },
     "Authentication": [
       {
         "question": "What is the password for the admin user, as stored in the server database?",
-        "answer": "bt3kge"
+        "answer": "2luywx"
       },
       {
         "question": "What is the address of the admin?",
-        "answer": "bt3kge"
+        "answer": "2luywx"
       },
       {
         "question": "What is the provider number for the admin?",
-        "answer": "bt3kge"
+        "answer": "2luywx"
       },
       {
         "question": "What is the street address of the admin?",
-        "answer": "bt3kge"
+        "answer": "2luywx"
       },
       {
         "question": "What is the mobile number of the admin?",
-        "answer": "bt3kge"
+        "answer": "2luywx"
       },
       {
         "question": "What is the city of the admin?",
-        "answer": "bt3kge"
+        "answer": "2luywx"
       }
     ]
   }
