@@ -5,7 +5,7 @@
         [
           {
             "question": "How many products are there in total?",
-            "answer": "2luywx"
+            "answer": "hhg500"
           },
           {
             "question": "How many unreleased products are there?",
@@ -30,66 +30,66 @@
             "answer": "[object Promise]"
           },
           {
-            "question": "What is the password for the gy86mi, as stored in the server database?",
-            "answer": "08nipy"
+            "question": "What is the password for the so7alm, as stored in the server database?",
+            "answer": "ecly35"
           },
           {
-            "question": "What is the street address of gy86mi?",
-            "answer": "2luywx"
+            "question": "What is the street address of so7alm?",
+            "answer": "hhg500"
           },
           {
             "question": "What is the mobile number of the admin?",
-            "answer": "2luywx"
+            "answer": "hhg500"
           },
           {
             "question": "What is the city of the admin?",
-            "answer": "2luywx"
+            "answer": "hhg500"
           }
         ]
       ],
       "URL_rewriting": [
         {
           "question": "What is the current sessionID?",
-          "answer": "2luywx"
+          "answer": "hhg500"
         },
         {
-          "question": "What is the last name j3qd2r",
-          "answer": "2luywx"
+          "question": "What is the last name jtiozw",
+          "answer": "hhg500"
         },
         {
           "question": "What is the length of the current sessionID?",
-          "answer": "2luywx"
+          "answer": "hhg500"
         },
         {
           "question": "How many numerals are there in the current sessionID?",
-          "answer": "2luywx"
+          "answer": "hhg500"
         }
       ]
     },
     "Authentication": [
       {
         "question": "What is the password for the admin user, as stored in the server database?",
-        "answer": "2luywx"
+        "answer": "hhg500"
       },
       {
         "question": "What is the address of the admin?",
-        "answer": "2luywx"
+        "answer": "hhg500"
       },
       {
         "question": "What is the provider number for the admin?",
-        "answer": "2luywx"
+        "answer": "hhg500"
       },
       {
         "question": "What is the street address of the admin?",
-        "answer": "2luywx"
+        "answer": "hhg500"
       },
       {
         "question": "What is the mobile number of the admin?",
-        "answer": "2luywx"
+        "answer": "hhg500"
       },
       {
         "question": "What is the city of the admin?",
-        "answer": "2luywx"
+        "answer": "hhg500"
       }
     ]
   }

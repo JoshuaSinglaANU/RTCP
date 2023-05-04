@@ -367,12 +367,25 @@ try {
   console.error(err);
 }
 
+try {
+  // Delete all users from the database
+  await UserPayment.destroy({
+    where: {},
+    truncate: true
+  });
+  console.log('User Payment emptied.');
+} catch (err) {
+  console.error(err);
+}
+
+
 
 
 try {
   const numUsers = 10;
   const users = [];
   const userAddresses = [];
+  const userPayments = [];
   const passwordPromises = [];
   for (let i = 0; i < numUsers; i++) {
     const username = Math.random().toString(36).substring(2, 8);
@@ -407,8 +420,9 @@ try {
     const country = Math.random().toString(36).substring(2, 8);
     const mobile = generateRandomNumber();
     const provider = Math.random().toString(36).substring(2, 8);
-    const accountNumber = Math.random().toString(36).substring(2, 8);
+    const account_no = Math.random().toString(36).substring(2, 8);
     userAddresses.push({address, city, country, mobile});
+    userPayments.push({provider, account_no});
 
   }
   console.log(userAddresses);
@@ -416,6 +430,7 @@ try {
   for (let i = 0; i < numUsers; i++) {
     const user = await User.create({ ...users[i], password: hashedPasswords[i] });
     await UserAddress.create(userAddresses[i]);
+    await UserPayment.create(userPayments[i]);
     users[i] = user;
   }
 } catch (err) {
