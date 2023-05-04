@@ -17,12 +17,12 @@ html
         li
           a(href='/searchProducts') Search Products
     main
-        form(action="post")
+        form(method="post", action = "/answer")
             each field in formFields
                 br
-                label= field.name
+                label= field.label
                 br
-                input(name=field.name)
+                input(name= field.name)
                 br
                 br
                 hr

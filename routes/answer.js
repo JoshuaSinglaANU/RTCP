@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var questions = [];
+var answers = [];
 
 router.get('/', function(req, res) {
     // req.session.generatedQuestions = true;
@@ -15,12 +16,17 @@ router.get('/', function(req, res) {
 
    console.log(questions);
 
-    for (var question of questions) {
-        formFields.push({label: question, name : question})
-    }
+   for (let i = 0; i < 5; i++) {
+    formFields.push({label: questions[i].question, name : "Question " + i}) 
+    answers.push(questions[i].answer);   
+   }
 
    res.render("QuestionsPage", {formFields: formFields})
 
+})
+
+router.post('/', function(req,res) {
+  console.log(checkAnswers(req.body, answers));
 })
 
 function generateFormFields (formFields) {
@@ -67,5 +73,15 @@ function getRandomElements(list, n) {
   const randomElements = getRandomElements(list, 3);
   console.log(randomElements);
   
+function checkAnswers(reqBody, answerList) {
+  let score = 0;
+  for (let i = 0; i < answerList.length; i++) {
+      const question = `Question ${i}`;
+    if (reqBody[question] === answerList[i]) {
+      score++;
+    }
+  }
+  return score;
+}
 
 module.exports = router;

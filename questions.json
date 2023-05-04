@@ -2,38 +2,67 @@
   "vulnerabilities": {
     "SQL_Injection": {
       "Difficulty": [
-        [
-          "How many products are there in total?",
-          "How many unreleased products are there?",
-          "What is the total quantity of the unreleased products?",
-          "What is the most expensive product?",
-          "What is the total price of the inventory?"
-        ],
-        [
-          "How many total users are there?",
-          "What is the password for the admin user, as stored in the server database?",
-          "How many tables does the server database have?",
-          "What is the street address of the admin?",
-          "What is the provider number for the admin?",
-          "What is the mobile number of the admin?",
-          "What is the city of the admin?"
-        ]
+        {
+          "question": "How many products are there in total?",
+          "answer": ""
+        },
+        {
+          "question": "How many unreleased products are there?",
+          "answer": ""
+        },
+        {
+          "question": "What is the total quantity of the unreleased products?",
+          "answer": ""
+        },
+        {
+          "question": "What is the most expensive product?",
+          "answer": ""
+        },
+        {
+          "question": "What is the total price of the inventory?",
+          "answer": ""
+        }
       ],
       "URL_rewriting": [
-        [
-          "What is the current sessionID?",
-          "What is the length of the current sessionID?",
-          "How many numerals are there in the current sessionID?"
-        ]
+        {
+          "question": "What is the current sessionID?",
+          "answer": ""
+        },
+        {
+          "question": "What is the length of the current sessionID?",
+          "answer": ""
+        },
+        {
+          "question": "How many numerals are there in the current sessionID?",
+          "answer": ""
+        }
       ]
     },
     "Authentication": [
-      "What is the password for the admin user, as stored in the server database?",
-      "What is the address of the admin?",
-      "What is the provider number for the admin?",
-      "What is the street address of the admin?",
-      "What is the mobile number of the admin?",
-      "What is the city of the admin?"
+      {
+        "question": "What is the password for the admin user, as stored in the server database?",
+        "answer": ""
+      },
+      {
+        "question": "What is the address of the admin?",
+        "answer": ""
+      },
+      {
+        "question": "What is the provider number for the admin?",
+        "answer": ""
+      },
+      {
+        "question": "What is the street address of the admin?",
+        "answer": ""
+      },
+      {
+        "question": "What is the mobile number of the admin?",
+        "answer": ""
+      },
+      {
+        "question": "What is the city of the admin?",
+        "answer": ""
+      }
     ]
   }
 }
