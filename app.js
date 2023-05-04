@@ -2,7 +2,7 @@ const port = 40005
 
 var createError = require('http-errors');
 var express = require('express');
-
+var bcrypt = require("bcrypt")
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -34,6 +34,7 @@ const sequelize = new Sequelize({
 sequelize.authenticate()
   .then(() => console.log('Database Connected'))
   .catch(err => console.log('Error: ', err))
+
 
 createQuestionsAndAnswers ();
 
@@ -86,6 +87,8 @@ app.use('/searchProducts', searchProductsRouter);
 
 var obj = require('./config.json');
 const allowDirectoryListing = obj.vulnerabilities[0].Directory_Listing;
+const encryptionLevel = obj.vulnerabilities[0].Authentication;
+populateUserAccounts ();
 
 if (allowDirectoryListing) {
   app.use('/admin/directory', express.static(__dirname + "/"), serveIndex(__dirname + "/public", {'icons': true}))
@@ -219,4 +222,100 @@ function createQuestionsAndAnswers () {
     console.log('JSON data has been written to file');
   });
   
+}
+
+async function populateUserAccounts () {
+  // Define the User model
+const User = sequelize.define('user', {
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  first_name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  last_name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  admin: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  }
+}, {
+  tableName: 'user',
+  timestamps: false
+});
+
+try {
+  // Delete all users from the database
+  await User.destroy({
+    where: {},
+    truncate: true
+  });
+  console.log('User table emptied.');
+} catch (err) {
+  console.error(err);
+}
+
+
+
+try {
+  const numUsers = 10;
+  const users = [];
+  const passwordPromises = [];
+  for (let i = 0; i < numUsers; i++) {
+    const username = Math.random().toString(36).substring(2, 8);
+    const password = Math.random().toString(36).substring(2, 8);
+    switch (encryptionLevel) {
+      case 0:
+        passwordPromises.push(Promise.resolve(password));
+        break;
+      case 1:
+        passwordPromises.push(Promise.resolve(password));
+        break;
+      case 2:
+        passwordPromises.push(Promise.resolve(cipherRot13(password)));
+        break;
+      case 3:
+      default:
+        passwordPromises.push(bcrypt.hash(password, 10));
+        break;
+    }
+    const first_name = Math.random().toString(36).substring(2, 8);
+    const last_name = Math.random().toString(36).substring(2, 8);
+    const admin = 0;
+    const user = { username, password, first_name, last_name, admin };
+    users.push(user);
+  }
+  const hashedPasswords = await Promise.all(passwordPromises);
+  for (let i = 0; i < numUsers; i++) {
+    const user = await User.create({ ...users[i], password: hashedPasswords[i] });
+    users[i] = user;
+  }
+} catch (err) {
+  console.error(err);
+}
+
+
+
+}
+
+function cipherRot13(str) {
+  str = str.toUpperCase();
+  return str.replace(/[A-Z]/g, rot13);
+
+  function rot13(correspondance) {
+    const charCode = correspondance.charCodeAt();
+    return String.fromCharCode(
+      ((charCode + 13) <= 90) ? charCode + 13
+        : (charCode + 13) % 90 + 64
+    );
+
+  }
 }

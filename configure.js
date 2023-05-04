@@ -5,7 +5,7 @@ const config = {
     {
       SQL_Injection: 2,
       URL_rewriting: 1,
-      Authentication: 1,
+      Authentication: 3,
       XSS: 1,
       Paramater_tampering: 0,
       Admin_Console: 1,
