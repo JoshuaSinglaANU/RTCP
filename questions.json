@@ -1,0 +1,96 @@
+{
+  "vulnerabilities": {
+    "SQL_Injection": {
+      "Difficulty": [
+        [
+          {
+            "question": "How many products are there in total?",
+            "answer": "49j2vv"
+          },
+          {
+            "question": "How many unreleased products are there?",
+            "answer": "0"
+          },
+          {
+            "question": "What is the total quantity of the unreleased products?",
+            "answer": "null"
+          },
+          {
+            "question": "What is the most expensive product?",
+            "answer": "10"
+          },
+          {
+            "question": "What is the total price of the inventory?",
+            "answer": "1"
+          }
+        ],
+        [
+          {
+            "question": "How many total users are there?",
+            "answer": "10"
+          },
+          {
+            "question": "What is the password for the 2z1bp1, as stored in the server database?",
+            "answer": "$2b$10$AAvr1U7NQImpRdmcsIymTeKMipD/H3xrdTy2000s1t2oizTAm/TW2"
+          },
+          {
+            "question": "What is the street address of 2z1bp1?",
+            "answer": "yj4ogg"
+          },
+          {
+            "question": "What is the mobile number of the admin?",
+            "answer": "9020901038"
+          },
+          {
+            "question": "What is the city of the admin?",
+            "answer": "9mpcbo"
+          }
+        ]
+      ],
+      "URL_rewriting": [
+        {
+          "question": "What is the current sessionID?",
+          "answer": "49j2vv"
+        },
+        {
+          "question": "What is the last name cs2hdc",
+          "answer": "49j2vv"
+        },
+        {
+          "question": "What is the length of the current sessionID?",
+          "answer": "49j2vv"
+        },
+        {
+          "question": "How many numerals are there in the current sessionID?",
+          "answer": "49j2vv"
+        }
+      ]
+    },
+    "Authentication": [
+      {
+        "question": "What is the password for the admin user, as stored in the server database?",
+        "answer": "49j2vv"
+      },
+      {
+        "question": "What is the address of the admin?",
+        "answer": "49j2vv"
+      },
+      {
+        "question": "What is the provider number for the admin?",
+        "answer": "49j2vv"
+      },
+      {
+        "question": "What is the street address of the admin?",
+        "answer": "49j2vv"
+      },
+      {
+        "question": "What is the mobile number of the admin?",
+        "answer": "49j2vv"
+      },
+      {
+        "question": "What is the city of the admin?",
+        "answer": "49j2vv"
+      }
+    ]
+  }
+}

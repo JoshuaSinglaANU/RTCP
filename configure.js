@@ -5,12 +5,12 @@ const config = {
     {
       SQL_Injection: 2,
       URL_rewriting: 1,
-      Authentication: 1,
+      Authentication: 0,
       XSS: 1,
       Paramater_tampering: 0,
       Admin_Console: 1,
       Directory_Listing: 1,
-      SSL: 1
+      SSL: 0
     }
   ]
 };

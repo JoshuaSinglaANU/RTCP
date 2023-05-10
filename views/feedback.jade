@@ -1,0 +1,34 @@
+doctype html
+html
+  head
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title Welcome
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+    link(rel='stylesheet', href='../public/stylesheets/style.css')
+  body
+    nav
+      ul
+        li
+          a(href='/') Home
+        li
+          a(href='/profile') Profile
+        li
+          a(href='/updateProfile') Change Profile
+        li
+          a(href='/searchProducts') Search Products
+
+    h1 Feedback
+    p= "You answered " + score + " correct."
+    table
+      thead
+        tr
+          th Question
+          th Your answer
+          th Correct Answer
+      tbody
+        each feedback in feedbacks
+          tr
+              td= feedback.question
+              td= feedback.userAnswer
+              td= feedback.correctAnswer 
+                    

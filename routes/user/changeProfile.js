@@ -3,7 +3,7 @@ var router = express.Router();
 const cookieParser = require('cookie-parser');
 const xss = require('xss');
 
-const difficulty = 2
+const difficulty = 1
 
 router.get('/', function(req, res) {
     res.cookie('sessionid', {
