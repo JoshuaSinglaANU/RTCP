@@ -1,7 +1,18 @@
 var express = require('express');
 var router = express.Router();
+const bodyParser = require('body-parser');
+const session = require('express-session');
 var questions = [];
 var answers = [];
+router.use(bodyParser.json());
+
+router.use(session({
+  secret: 'my-secret-key',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+
 
 router.get('/', function(req, res) {
     // req.session.generatedQuestions = true;
@@ -26,7 +37,17 @@ router.get('/', function(req, res) {
 })
 
 router.post('/', function(req,res) {
+  req.app.set("answeredQuestions", true);
   console.log(checkAnswers(req.body, answers));
+
+  console.log("redirecting");
+
+  req.session.score = checkAnswers(req.body, answers);
+  req.session.question_answer_pairs = questions;
+  req.session.submittedAnswers = req.body;
+
+  console.log(req.session);
+  res.redirect("/feedback")
 })
 
 function generateFormFields (formFields) {

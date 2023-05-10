@@ -17,6 +17,7 @@ var searchProductsRouter = require('./routes/user/searchProducts.js')
 var directoryRouter = require('./routes/admin/directory.js')
 var answerRouter = require('./routes/answer.js')
 var updateProfileRouter = require('./routes/user/changeProfile.js')
+var feedbackRouter = require('./routes/feedback.js')
 const fs = require('fs')
 const https = require('https');
 const { Sequelize, DataTypes } = require('sequelize');
@@ -136,6 +137,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.set("generatedQuestions", false);
+app.set("answeredQuestions", false);
 app.set('trust proxy', 1) // trust first proxy
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(sessions({
@@ -144,7 +146,6 @@ app.use(sessions({
   saveUninitialized: true,
   cookie: {
     httpOnly: false,
-    expires: 60000,
     generatedQuestions: false
   }
 }));
@@ -158,6 +159,8 @@ app.use('/login', loginRouter);
 app.use('/', indexRouter);
 
 app.use('/profile', profileRouter);
+
+app.use('/feedback', feedbackRouter);
 
 app.use('/createAccount', createAccountRouter);
 
