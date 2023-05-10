@@ -25,7 +25,7 @@ router.get('/', function(req, res) {
     }
     console.log("TEST");
     console.log(formFields);
-    res.render("feedback", {feedbacks: formFields});
+    res.render("feedback", {score: routerSession.score, feedbacks: formFields});
     } else {
         res.redirect("/answer");
     }
