@@ -1,4 +1,4 @@
-const port = 40006
+const port = 40007
 
 var createError = require('http-errors');
 var express = require('express');
@@ -35,6 +35,90 @@ sequelize.authenticate()
   .then(() => console.log('Database Connected'))
   .catch(err => console.log('Error: ', err))
 
+  const Product = sequelize.define('product', {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    price: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
+    quantity: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    released: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+  }, {
+    tableName: 'product',
+    timestamps: false
+  });
+  
+
+  const User = sequelize.define('user', {
+    username: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    password: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    first_name: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    last_name: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    admin: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    }
+  }, {
+    tableName: 'user',
+    timestamps: false
+  });
+  
+  const UserAddress = sequelize.define('user_address', {
+    address: {
+      type: DataTypes.STRING,
+    },
+    city: {
+      type: DataTypes.STRING
+    },
+    country: {
+      type: DataTypes.STRING
+    },
+    mobile: {
+      type: DataTypes.INTEGER
+    }
+  }, {
+    tableName: 'user_address',
+    timestamps: false
+  });
+  
+  const UserPayment = sequelize.define('user_payment', {
+    provider: {
+      type: DataTypes.STRING,
+    },
+    account_no: {
+      type: DataTypes.STRING
+    }
+  }, {
+    tableName: 'user_payment',
+    timestamps: false
+  });
+  
+  User.hasOne(UserAddress, { foreignKey: 'id' });
+  UserAddress.belongsTo(User, { foreignKey: 'id' });
+  
+  User.hasOne(UserPayment, { foreignKey: 'id' });
+  UserPayment.belongsTo(User, { foreignKey: 'id' });
 
 createQuestionsAndAnswers ();
 
@@ -140,86 +224,11 @@ if (ifHttps) {
   })
 }
 
-const Product = sequelize.define('product', {
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  price: {
-    type: DataTypes.FLOAT,
-    allowNull: false
-  },
-  quantity: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  released: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-}, {
-  tableName: 'product',
-  timestamps: false
-});
-
-const User = sequelize.define('user', {
-  username: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  first_name: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  last_name: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  admin: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  }
-}, {
-  tableName: 'user',
-  timestamps: false
-});
-
-const UserAddress = sequelize.define('user_address', {
-  address: {
-    type: DataTypes.STRING,
-  },
-  city: {
-    type: DataTypes.STRING
-  },
-  country: {
-    type: DataTypes.STRING
-  },
-  mobile: {
-    type: DataTypes.INTEGER
-  }
-}, {
-  tableName: 'user_address',
-  timestamps: false
-});
-
-const UserPayment = sequelize.define('user_payment', {
-  provider: {
-    type: DataTypes.STRING,
-  },
-  account_no: {
-    type: DataTypes.STRING
-  }
-}, {
-  tableName: 'user_payment',
-  timestamps: false
-});  
-
 
 async function createQuestionsAndAnswers () {
+
+  await populateUserAccounts ();
+
 
   var randomUser = await select_random_user();
 
@@ -231,7 +240,7 @@ async function createQuestionsAndAnswers () {
 
   var totalPrice = await getTotalPrice();
 
-  var numUsers = getNumUsers();
+  var numUsers = await getNumUsers();
 
   var questions_and_solutions = {
     vulnerabilities: {
@@ -270,15 +279,15 @@ async function createQuestionsAndAnswers () {
             },
             {
               question: `What is the street address of ${randomUser.username}?`,
-              answer: `${randomUser.address}`
+              answer: `${randomUser.user_address.address}`
             },
             {
               question: `What is the mobile number of the admin?`,
-              answer: `${randomUser.mobile}`
+              answer: `${randomUser.user_address.mobile}`
             },
             {
               question: `What is the city of the admin?`,
-              answer: `${randomUser.city}`
+              answer: `${randomUser.user_address.city}`
             }
           ]
         ],
@@ -457,23 +466,23 @@ function cipherRot13(str) {
 
 async function select_random_user () {
   try {
-    // Get a count of all users
     const count = await User.count();
-
-    // Generate a random index within the range of the user count
     const randomIndex = Math.floor(Math.random() * count);
-
-    // Find a random user based on the index
+  
+    console.log("Executing query!")
     const user = await User.findOne({
       offset: randomIndex,
+      order: sequelize.random(),
       include: [
         { model: UserAddress },
         { model: UserPayment }
-      ]
+      ],
+      raw: true,
+      nest: true
     });
-
-    // Return the user object with associated address and payment details
-    return user.toJSON();
+    console.log(user);
+    return user;
+    
   } catch (err) {
     console.error(err);
     throw err;
@@ -545,9 +554,6 @@ async function getNumUsers () {
       console.error(`Error counting num users: ${error.message}`);
     });
 }
-
-populateUserAccounts ();
-
 function generateRandomNumber() {
   const min = 1000000000;
   const max = 9999999999;
