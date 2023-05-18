@@ -7,6 +7,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var serveIndex = require('serve-index')
+var csrf = require('csurf');
 
 var loginRouter = require('./routes/login.js');
 var profileRouter = require('./routes/user/profile.js')
@@ -150,7 +151,7 @@ app.use(sessions({
   }
 }));
 
-
+const csrfProtection = csrf({ cookie: true });
 
 // default options
 app.use(fileUpload());
@@ -168,9 +169,20 @@ app.use('/admin/users', usersRouter);
 
 app.use('/answer', answerRouter);
 
+app.use('/updateProfile', csrfProtection); 
 app.use('/updateProfile', updateProfileRouter);
 
 app.use('/searchProducts', searchProductsRouter);
+
+// Enable CSRF protection for all routes except "/profile/update"
+
+// app.use((req, res, next) => {
+//   if (req.url === '/updateProfile') {
+//     next();
+//   } else {
+//     csrf({ cookie: true })(req, res, next);
+//   }
+// });
 
 var obj = require('./config.json');
 const allowDirectoryListing = obj.vulnerabilities[0].Directory_Listing;

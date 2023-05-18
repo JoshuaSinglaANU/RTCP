@@ -6,11 +6,13 @@ const xss = require('xss');
 const difficulty = 1
 
 router.get('/', function(req, res) {
+    console.log("CSRF");
+    console.log(req.csrfToken);
     res.cookie('sessionid', {
          httpOnly: false 
         });
     // console.log(document.cookie);
-    res.render("user/updateProfile");
+    res.render("user/updateProfile", {csrfToken: req.csrfToken()});
 
 })
 
@@ -20,6 +22,11 @@ router.get('/', function(req, res) {
 </script> */}
 
 router.post('/', function(req, res) {
+
+    console.log("CSRF");
+    console.log(req.body);
+    
+
 
     switch (difficulty) {
         case 1: {

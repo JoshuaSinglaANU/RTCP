@@ -5,7 +5,7 @@
         [
           {
             "question": "How many products are there in total?",
-            "answer": "49j2vv"
+            "answer": "vo3cf8"
           },
           {
             "question": "How many unreleased products are there?",
@@ -30,66 +30,66 @@
             "answer": "10"
           },
           {
-            "question": "What is the password for the 2z1bp1, as stored in the server database?",
-            "answer": "$2b$10$AAvr1U7NQImpRdmcsIymTeKMipD/H3xrdTy2000s1t2oizTAm/TW2"
+            "question": "What is the password for the koer1o, as stored in the server database?",
+            "answer": "$2b$10$ccLVvK5I7HmAiopBuM4mgeKtq5cwYNT84zGKl9kEzsWqCbDSriC66"
           },
           {
-            "question": "What is the street address of 2z1bp1?",
-            "answer": "yj4ogg"
+            "question": "What is the street address of koer1o?",
+            "answer": "2cri5k"
           },
           {
             "question": "What is the mobile number of the admin?",
-            "answer": "9020901038"
+            "answer": "5775627806"
           },
           {
             "question": "What is the city of the admin?",
-            "answer": "9mpcbo"
+            "answer": "jjvgd8"
           }
         ]
       ],
       "URL_rewriting": [
         {
           "question": "What is the current sessionID?",
-          "answer": "49j2vv"
+          "answer": "vo3cf8"
         },
         {
-          "question": "What is the last name cs2hdc",
-          "answer": "49j2vv"
+          "question": "What is the last name p48i4m",
+          "answer": "vo3cf8"
         },
         {
           "question": "What is the length of the current sessionID?",
-          "answer": "49j2vv"
+          "answer": "vo3cf8"
         },
         {
           "question": "How many numerals are there in the current sessionID?",
-          "answer": "49j2vv"
+          "answer": "vo3cf8"
         }
       ]
     },
     "Authentication": [
       {
         "question": "What is the password for the admin user, as stored in the server database?",
-        "answer": "49j2vv"
+        "answer": "vo3cf8"
       },
       {
         "question": "What is the address of the admin?",
-        "answer": "49j2vv"
+        "answer": "vo3cf8"
       },
       {
         "question": "What is the provider number for the admin?",
-        "answer": "49j2vv"
+        "answer": "vo3cf8"
       },
       {
         "question": "What is the street address of the admin?",
-        "answer": "49j2vv"
+        "answer": "vo3cf8"
       },
       {
         "question": "What is the mobile number of the admin?",
-        "answer": "49j2vv"
+        "answer": "vo3cf8"
       },
       {
         "question": "What is the city of the admin?",
-        "answer": "49j2vv"
+        "answer": "vo3cf8"
       }
     ]
   }
