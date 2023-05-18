@@ -6,11 +6,15 @@ const xss = require('xss');
 const difficulty = 1
 
 router.get('/', function(req, res) {
+    const isCSRFAttack = req.get('X-CSRF-Attack') === 'true';
+    
+    console.log("CSRF");
+    console.log(isCSRFAttack);
     res.cookie('sessionid', {
          httpOnly: false 
         });
     // console.log(document.cookie);
-    res.render("user/updateProfile");
+    res.render("user/updateProfile", {csrfToken: req.csrfToken()});
 
 })
 
@@ -20,6 +24,18 @@ router.get('/', function(req, res) {
 </script> */}
 
 router.post('/', function(req, res) {
+
+    const csrfToken = req.csrfToken();
+    if (req.csrfToken() !== csrfToken) {
+        res.status(403).send('CSRF token validation failed.');
+        return;
+      }
+
+
+    console.log("CSRF");
+    console.log(req.body);
+    
+
 
     switch (difficulty) {
         case 1: {
