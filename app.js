@@ -330,7 +330,17 @@ async function createQuestionsAndAnswers (req) {
         },
         {
           question: `What is the length of the current sessionID?`,
+          answer: `${req.sessionID.length}`
+        }
+      ],
+      XSS: [
+        {
+          question: `What is the current sessionID?`,
           answer: `${req.sessionID}`
+        },
+        {
+          question: `What is the length of the current sessionID?`,
+          answer: `${req.sessionID.length}`
         }
       ],
       Authentication: [
@@ -387,10 +397,28 @@ async function createQuestionsAndAnswers (req) {
           answer: `${admin.last_name}`
         }
       ],
-      XSS: [
+      Paramater_tampering: [
         {
-          question: `What is the password for the admin user, as stored in the server database?`,
+          question: `What is the provider number for ${randomUser.username}`,
           answer: `${admin.last_name}`
+        },
+        {
+          question: `What is the street address of ${randomUser.username}`,
+          answer: `${admin.last_name}`
+        },
+        {
+          question: `What is the mobile number of ${randomUser.username}`,
+          answer: `${admin.last_name}`
+        }
+      ],
+      Admin_Console: [
+        {
+          question: `How many total users are there?`,
+          answer: `${numUsers}`
+        },
+        {
+          question: `What is the password for the ${randomUser.username}, as stored in the server database?`,
+          answer: `${randomUser.password}`
         }
       ]
     }

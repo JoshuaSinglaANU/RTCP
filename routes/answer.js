@@ -79,10 +79,21 @@ function generateFormFields (formFields) {
     }
     const URLrewritingDifficulty = difficulties.vulnerabilities[0].URL_rewriting;
     if (URLrewritingDifficulty == 1) {
-      console.log("A")
       URLrewritingQuestions = questions.vulnerabilities.URL_rewriting;
-      console.log(questions.vulnerabilities);
-      // questionPool = questionPool.concat(URLrewritingQuestions);
+      questionPool = questionPool.concat(URLrewritingQuestions);
+    }
+
+    const XSSDifficulty = difficulties.vulnerabilities[0].XSS;
+
+    if (XSSDifficulty == 1) {
+      XSSQuestions = questions.vulnerabilities.XSS;
+      questionPool = questionPool.concat(XSSQuestions);
+    }
+
+    const ParameterTamperingDifficulty = difficulties.vulnerabilities[0].Paramater_tampering;
+    if (ParameterTamperingDifficulty == 1) {
+      ParameterTamperingQuestions = questions.vulnerabilities.XSS;
+      questionPool = questionPool.concat(ParameterTamperingQuestions);
     }
 
     const questionsList = getRandomElements(questionPool, 5)
