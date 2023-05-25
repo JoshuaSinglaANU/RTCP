@@ -26,74 +26,92 @@
             "answer": "11"
           },
           {
-            "question": "What is the password for the 2kllf1, as stored in the server database?",
-            "answer": "$2b$10$TXWD40PbdO6QZgionGnq3.ViGm/HXCRQqx1ydVyzBJDvspWwl7DwG"
+            "question": "What is the password for the qwq5jt, as stored in the server database?",
+            "answer": "n3c3yf"
           },
           {
-            "question": "What is the street address of 2kllf1?",
-            "answer": "83ooiq"
+            "question": "What is the street address of qwq5jt?",
+            "answer": "hxbsvc"
           },
           {
             "question": "What is the mobile number of the admin?",
-            "answer": "4732608195"
+            "answer": "1338262840"
           },
           {
             "question": "What is the city of the admin?",
-            "answer": "906bde"
+            "answer": "8dxsn7"
           }
         ]
       ],
       "URL_rewriting": [
         {
           "question": "What is the current sessionID?",
-          "answer": "y4z2gi"
+          "answer": "1b2wSj1z0aKTo3RAgY29PV9AUkgQbMsN"
         },
         {
           "question": "What is the length of the current sessionID?",
-          "answer": "y4z2gi"
+          "answer": "1b2wSj1z0aKTo3RAgY29PV9AUkgQbMsN"
         }
       ]
     },
     "Authentication": [
       {
         "question": "What is the password for the admin user, as stored in the server database?",
-        "answer": "4mas33"
+        "answer": "30flbu"
       },
       {
         "question": "What is the address of the admin?",
-        "answer": "4mas33"
+        "answer": "30flbu"
       },
       {
         "question": "What is the provider number for the admin?",
-        "answer": "4mas33"
+        "answer": "30flbu"
       },
       {
         "question": "What is the street address of the admin?",
-        "answer": "4mas33"
+        "answer": "30flbu"
       },
       {
         "question": "What is the mobile number of the admin?",
-        "answer": "4mas33"
+        "answer": "30flbu"
       },
       {
         "question": "What is the city of the admin?",
-        "answer": "4mas33"
+        "answer": "30flbu"
       },
       {
-        "question": "What is the password for the 2kllf1, as stored in the server database?",
-        "answer": "$2b$10$TXWD40PbdO6QZgionGnq3.ViGm/HXCRQqx1ydVyzBJDvspWwl7DwG"
+        "question": "What is the password for the qwq5jt, as stored in the server database?",
+        "answer": "n3c3yf"
       },
       {
-        "question": "What is the street address of 2kllf1?",
-        "answer": "83ooiq"
+        "question": "What is the street address of qwq5jt?",
+        "answer": "hxbsvc"
       },
       {
         "question": "What is the mobile number of the admin?",
-        "answer": "4732608195"
+        "answer": "1338262840"
       },
       {
         "question": "What is the city of the admin?",
-        "answer": "906bde"
+        "answer": "8dxsn7"
+      },
+      {
+        "question": "What is the provider number for qwq5jt",
+        "answer": "30flbu"
+      },
+      {
+        "question": "What is the street address of qwq5jt",
+        "answer": "30flbu"
+      },
+      {
+        "question": "What is the mobile number of qwq5jt",
+        "answer": "30flbu"
+      }
+    ],
+    "XSS": [
+      {
+        "question": "What is the password for the admin user, as stored in the server database?",
+        "answer": "30flbu"
       }
     ]
   }

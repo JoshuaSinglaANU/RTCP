@@ -17,12 +17,18 @@ router.use(session({
 router.get('/', function(req, res) {
     // req.session.generatedQuestions = true;
     var generateQuestions = req.app.get("generatedQuestions");
-    console.log(generateQuestions);
+    var createdQuestions = req.app.get("createdQuestions");
+    console.log(createdQuestions);
    var formFields = [];
    // Generate the form
    if (!generateQuestions) {
-    questions = generateFormFields(formFields);
-    req.app.set("generatedQuestions", true);
+    
+    if (!createdQuestions) {
+      res.redirect("/");
+    } else {
+      questions = generateFormFields(formFields);
+      req.app.set("generatedQuestions", true);
+    }
    }
 
    console.log(questions);
@@ -89,6 +95,8 @@ function getRandomElements(list, n) {
     }
     return result;
   }
+
+  //9JXhV3BNvyFqWpZDkNkDiC_yIuzxDWWK
   
   const list = ["apple", "banana", "cherry", "date", "elderberry"];
   const randomElements = getRandomElements(list, 3);

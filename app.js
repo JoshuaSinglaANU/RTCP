@@ -1,4 +1,4 @@
-const port = 40007
+const port = 40008
 
 var createError = require('http-errors');
 var express = require('express');
@@ -12,7 +12,8 @@ var csrf = require('csurf');
 var loginRouter = require('./routes/login.js');
 var profileRouter = require('./routes/user/profile.js')
 var createAccountRouter = require('./routes/createAccount.js')
-var indexRouter = require('./routes/index.js')
+// var indexRouter = require('./routes/index.js')
+var indexRouter = express.Router();
 var usersRouter = require('./routes/admin/users.js')
 var searchProductsRouter = require('./routes/user/searchProducts.js')
 var directoryRouter = require('./routes/admin/directory.js')
@@ -22,7 +23,7 @@ var feedbackRouter = require('./routes/feedback.js')
 const fs = require('fs')
 const https = require('https');
 const { Sequelize, DataTypes } = require('sequelize');
-var sessionID;
+var createdQuestions = false;
 var app = express();
 var fileUpload = require('express-fileupload');
 var sessions = require('express-session')
@@ -122,7 +123,16 @@ sequelize.authenticate()
   User.hasOne(UserPayment, { foreignKey: 'id' });
   UserPayment.belongsTo(User, { foreignKey: 'id' });
 
-createQuestionsAndAnswers ();
+  indexRouter.get('/', async (req, res) => {
+    
+    if (!createdQuestions) {
+      await createQuestionsAndAnswers (req);
+      req.app.set("createdQuestions", true);
+    }
+    res.render("index");
+  });
+  
+
 
 // view engine setup
 // Assigning the name 'views' to everything under /views
@@ -138,6 +148,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.set("generatedQuestions", false);
+app.set("createdQuestions", false);
 app.set("answeredQuestions", false);
 app.set('trust proxy', 1) // trust first proxy
 const oneDay = 1000 * 60 * 60 * 24;
@@ -150,6 +161,7 @@ app.use(sessions({
     generatedQuestions: false
   }
 }));
+
 
 const csrfProtection = csrf({ cookie: true });
 
@@ -185,11 +197,6 @@ app.use('/searchProducts', searchProductsRouter);
 // });
 
 // Middleware to retrieve session ID
-app.use((req, res, next) => {
-  sessionID = req.sessionID;
-  console.log('Current session ID:', sessionID);
-  next();
-});
 
 
 
@@ -249,7 +256,7 @@ if (ifHttps) {
 }
 
 
-async function createQuestionsAndAnswers () {
+async function createQuestionsAndAnswers (req) {
 
   await populateUserAccounts ();
 
@@ -318,11 +325,11 @@ async function createQuestionsAndAnswers () {
         URL_rewriting: [
           {
             question: `What is the current sessionID?`,
-            answer: `${randomUser.user_address.city}`
+            answer: `${req.sessionID}`
           },
           {
             question: `What is the length of the current sessionID?`,
-            answer: `${randomUser.user_address.city}`
+            answer: `${req.sessionID}`
           }
         ]
       },
@@ -366,6 +373,24 @@ async function createQuestionsAndAnswers () {
         {
           question: `What is the city of the admin?`,
           answer: `${admin.user_address.city}`
+        },
+        {
+          question: `What is the provider number for ${randomUser.username}`,
+          answer: `${admin.last_name}`
+        },
+        {
+          question: `What is the street address of ${randomUser.username}`,
+          answer: `${admin.last_name}`
+        },
+        {
+          question: `What is the mobile number of ${randomUser.username}`,
+          answer: `${admin.last_name}`
+        }
+      ],
+      XSS: [
+        {
+          question: `What is the password for the admin user, as stored in the server database?`,
+          answer: `${admin.last_name}`
         }
       ]
     }
