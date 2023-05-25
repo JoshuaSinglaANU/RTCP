@@ -4,10 +4,6 @@
       "Difficulty": [
         [
           {
-            "question": "How many products are there in total?",
-            "answer": "paerqe"
-          },
-          {
             "question": "How many unreleased products are there?",
             "answer": "0"
           },
@@ -27,69 +23,61 @@
         [
           {
             "question": "How many total users are there?",
-            "answer": "10"
+            "answer": "11"
           },
           {
-            "question": "What is the password for the w89dml, as stored in the server database?",
-            "answer": "$2b$10$k3uMDlngI9khvst20js9SehtKAYZhxqXBiPo3Vxufwno.CV.3rJ3K"
+            "question": "What is the password for the 8echfd, as stored in the server database?",
+            "answer": "$2b$10$eBL7kYf.Ny4fjOehPB7d7ewmVnv0ButD2t/D.0NK4ql0Nl6YLUvdK"
           },
           {
-            "question": "What is the street address of w89dml?",
-            "answer": "rjhx20"
+            "question": "What is the street address of 8echfd?",
+            "answer": "1dlpuz"
           },
           {
             "question": "What is the mobile number of the admin?",
-            "answer": "3348038558"
+            "answer": "1960896561"
           },
           {
             "question": "What is the city of the admin?",
-            "answer": "afg4uj"
+            "answer": "vdw4cl"
           }
         ]
       ],
       "URL_rewriting": [
         {
           "question": "What is the current sessionID?",
-          "answer": "paerqe"
-        },
-        {
-          "question": "What is the last name pp885h",
-          "answer": "paerqe"
+          "answer": "vdw4cl"
         },
         {
           "question": "What is the length of the current sessionID?",
-          "answer": "paerqe"
-        },
-        {
-          "question": "How many numerals are there in the current sessionID?",
-          "answer": "paerqe"
+          "answer": "vdw4cl"
         }
       ]
     },
     "Authentication": [
       {
         "question": "What is the password for the admin user, as stored in the server database?",
-        "answer": "paerqe"
+        "answer": "2sml48"
       },
       {
         "question": "What is the address of the admin?",
-        "answer": "paerqe"
+        "answer": "2sml48"
       },
       {
         "question": "What is the provider number for the admin?",
-        "answer": "paerqe"
+        "answer": "2sml48"
       },
       {
         "question": "What is the street address of the admin?",
-        "answer": "paerqe"
+        "answer": "2sml48"
       },
       {
         "question": "What is the mobile number of the admin?",
-        "answer": "paerqe"
+        "answer": "2sml48"
       },
       {
         "question": "What is the city of the admin?",
-        "answer": "paerqe"
+        "answer": "2sml48"
       }
     ]
   }

