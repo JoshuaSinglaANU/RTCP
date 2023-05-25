@@ -31,7 +31,7 @@ router.get('/', function(req, res) {
     }
    }
 
-   console.log(questions);
+   
 
    for (let i = 0; i < 5; i++) {
     formFields.push({label: questions[i].question, name : "Question " + i}) 
@@ -77,6 +77,14 @@ function generateFormFields (formFields) {
         authenticationQuestions = questions.vulnerabilities.Authentication;
         questionPool = questionPool.concat(authenticationQuestions);
     }
+    const URLrewritingDifficulty = difficulties.vulnerabilities[0].URL_rewriting;
+    if (URLrewritingDifficulty == 1) {
+      console.log("A")
+      URLrewritingQuestions = questions.vulnerabilities.URL_rewriting;
+      console.log(questions.vulnerabilities);
+      // questionPool = questionPool.concat(URLrewritingQuestions);
+    }
+
     const questionsList = getRandomElements(questionPool, 5)
     return questionsList;
 }

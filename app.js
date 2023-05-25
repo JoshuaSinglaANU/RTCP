@@ -321,18 +321,18 @@ async function createQuestionsAndAnswers (req) {
               answer: `${admin.user_address.city}`
             }
           ]
-        ],
-        URL_rewriting: [
-          {
-            question: `What is the current sessionID?`,
-            answer: `${req.sessionID}`
-          },
-          {
-            question: `What is the length of the current sessionID?`,
-            answer: `${req.sessionID}`
-          }
         ]
       },
+      URL_rewriting: [
+        {
+          question: `What is the current sessionID?`,
+          answer: `${req.sessionID}`
+        },
+        {
+          question: `What is the length of the current sessionID?`,
+          answer: `${req.sessionID}`
+        }
+      ],
       Authentication: [
         {
           question: `What is the password for the admin user, as stored in the server database?`,
