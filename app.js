@@ -258,7 +258,7 @@ async function createQuestionsAndAnswers () {
 
   var adminUser = await create_and_insert_admin();
 
-  var admin = getAdminUser();
+  var admin = (await getAdminUser());
 
   var numUnseleasedProducts = await count_unreleased_products ();
 
@@ -307,11 +307,11 @@ async function createQuestionsAndAnswers () {
             },
             {
               question: `What is the mobile number of the admin?`,
-              answer: `${randomUser.user_address.mobile}`
+              answer: `${admin.user_address.mobile}`
             },
             {
               question: `What is the city of the admin?`,
-              answer: `${randomUser.user_address.city}`
+              answer: `${admin.user_address.city}`
             }
           ]
         ],
@@ -329,27 +329,43 @@ async function createQuestionsAndAnswers () {
       Authentication: [
         {
           question: `What is the password for the admin user, as stored in the server database?`,
-          answer: `${randomUser.last_name}`
+          answer: `${admin.last_name}`
         },
         {
           question: `What is the address of the admin?`,
-          answer: `${randomUser.last_name}`
+          answer: `${admin.last_name}`
         },
         {
           question: `What is the provider number for the admin?`,
-          answer: `${randomUser.last_name}`
+          answer: `${admin.last_name}`
         },
         {
           question: `What is the street address of the admin?`,
-          answer: `${randomUser.last_name}`
+          answer: `${admin.last_name}`
         },
         {
           question: `What is the mobile number of the admin?`,
-          answer: `${randomUser.last_name}`
+          answer: `${admin.last_name}`
         },
         {
           question: `What is the city of the admin?`,
-          answer: `${randomUser.last_name}`
+          answer: `${admin.last_name}`
+        },
+        {
+          question: `What is the password for the ${randomUser.username}, as stored in the server database?`,
+          answer: `${randomUser.password}`
+        },
+        {
+          question: `What is the street address of ${randomUser.username}?`,
+          answer: `${randomUser.user_address.address}`
+        },
+        {
+          question: `What is the mobile number of the admin?`,
+          answer: `${admin.user_address.mobile}`
+        },
+        {
+          question: `What is the city of the admin?`,
+          answer: `${admin.user_address.city}`
         }
       ]
     }
@@ -528,12 +544,25 @@ function cipherRot13(str) {
 
 async function getAdminUser() {
   try {
-      const adminUser = await User.findOne({ where: { admin: 1 } });
-      console.log("Admin");
-      console.log(adminUser);
-      return adminUser;
-  } catch (error) {
-      console.error(error);
+    const count = await User.count();
+  
+    console.log("Executing query!")
+    const user = await User.findOne({
+      where: {admin : 1},
+      include: [
+        { model: UserAddress },
+        { model: UserPayment }
+      ],
+      raw: true,
+      nest: true
+    });
+    console.log("admin")
+    console.log(user.user_address.mobile);
+    return user;
+    
+  } catch (err) {
+    console.error(err);
+    throw err;
   }
 }
 

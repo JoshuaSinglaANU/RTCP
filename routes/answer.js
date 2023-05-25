@@ -76,16 +76,16 @@ function generateFormFields (formFields) {
 }
 
 function getRandomElements(list, n) {
-    const result = new Array(n);
-    let len = list.length;
-    const taken = new Array(len);
-    if (n > len)
+      if (n > list.length)
       throw new RangeError("getRandomElements: more elements taken than available");
-  
-    while (n--) {
-      const x = Math.floor(Math.random() * len);
-      result[n] = list[x in taken ? taken[x] : x];
-      taken[x] = --len in taken ? taken[len] : len;
+
+    let result = [];
+    let tempArray = [...list]; // Clone the list to a temporary array
+
+    while(n--) {
+      const index = Math.floor(Math.random() * tempArray.length);
+      result.push(tempArray[index]);
+      tempArray.splice(index, 1); // Remove the chosen element from the temp array
     }
     return result;
   }
