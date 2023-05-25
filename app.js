@@ -1,4 +1,4 @@
-const port = 40007
+const port = 40008
 
 var createError = require('http-errors');
 var express = require('express');
@@ -12,7 +12,8 @@ var csrf = require('csurf');
 var loginRouter = require('./routes/login.js');
 var profileRouter = require('./routes/user/profile.js')
 var createAccountRouter = require('./routes/createAccount.js')
-var indexRouter = require('./routes/index.js')
+// var indexRouter = require('./routes/index.js')
+var indexRouter = express.Router();
 var usersRouter = require('./routes/admin/users.js')
 var searchProductsRouter = require('./routes/user/searchProducts.js')
 var directoryRouter = require('./routes/admin/directory.js')
@@ -22,7 +23,7 @@ var feedbackRouter = require('./routes/feedback.js')
 const fs = require('fs')
 const https = require('https');
 const { Sequelize, DataTypes } = require('sequelize');
-
+var createdQuestions = false;
 var app = express();
 var fileUpload = require('express-fileupload');
 var sessions = require('express-session')
@@ -122,7 +123,16 @@ sequelize.authenticate()
   User.hasOne(UserPayment, { foreignKey: 'id' });
   UserPayment.belongsTo(User, { foreignKey: 'id' });
 
-createQuestionsAndAnswers ();
+  indexRouter.get('/', async (req, res) => {
+    
+    if (!createdQuestions) {
+      await createQuestionsAndAnswers (req);
+      req.app.set("createdQuestions", true);
+    }
+    res.render("index");
+  });
+  
+
 
 // view engine setup
 // Assigning the name 'views' to everything under /views
@@ -138,6 +148,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.set("generatedQuestions", false);
+app.set("createdQuestions", false);
 app.set("answeredQuestions", false);
 app.set('trust proxy', 1) // trust first proxy
 const oneDay = 1000 * 60 * 60 * 24;
@@ -150,6 +161,7 @@ app.use(sessions({
     generatedQuestions: false
   }
 }));
+
 
 const csrfProtection = csrf({ cookie: true });
 
@@ -183,6 +195,10 @@ app.use('/searchProducts', searchProductsRouter);
 //     csrf({ cookie: true })(req, res, next);
 //   }
 // });
+
+// Middleware to retrieve session ID
+
+
 
 var obj = require('./config.json');
 const allowDirectoryListing = obj.vulnerabilities[0].Directory_Listing;
@@ -240,12 +256,16 @@ if (ifHttps) {
 }
 
 
-async function createQuestionsAndAnswers () {
+async function createQuestionsAndAnswers (req) {
 
   await populateUserAccounts ();
 
 
   var randomUser = await select_random_user();
+
+  var adminUser = await create_and_insert_admin();
+
+  var admin = (await getAdminUser());
 
   var numUnseleasedProducts = await count_unreleased_products ();
 
@@ -262,10 +282,6 @@ async function createQuestionsAndAnswers () {
       SQL_Injection: {
         Difficulty: [
           [
-            {
-              question: `How many products are there in total?`,
-              answer: `${randomUser.last_name}`
-            },
             {
               question: `How many unreleased products are there?`,
               answer: `${numUnseleasedProducts}`
@@ -298,57 +314,111 @@ async function createQuestionsAndAnswers () {
             },
             {
               question: `What is the mobile number of the admin?`,
-              answer: `${randomUser.user_address.mobile}`
+              answer: `${admin.user_address.mobile}`
             },
             {
               question: `What is the city of the admin?`,
-              answer: `${randomUser.user_address.city}`
+              answer: `${admin.user_address.city}`
             }
           ]
-        ],
-        URL_rewriting: [
-          {
-            question: `What is the current sessionID?`,
-            answer: `${randomUser.last_name}`
-          },
-          {
-            question: `What is the last name ${randomUser.first_name}`,
-            answer: `${randomUser.last_name}`
-          },
-          {
-            question: `What is the length of the current sessionID?`,
-            answer: `${randomUser.last_name}`
-          },
-          {
-            question: `How many numerals are there in the current sessionID?`,
-            answer: `${randomUser.last_name}`
-          }
         ]
       },
+      URL_rewriting: [
+        {
+          question: `What is the current sessionID?`,
+          answer: `${req.sessionID}`
+        },
+        {
+          question: `What is the length of the current sessionID?`,
+          answer: `${req.sessionID.length}`
+        }
+      ],
+      XSS: [
+        {
+          question: `What is the current sessionID?`,
+          answer: `${req.sessionID}`
+        },
+        {
+          question: `What is the length of the current sessionID?`,
+          answer: `${req.sessionID.length}`
+        }
+      ],
       Authentication: [
         {
           question: `What is the password for the admin user, as stored in the server database?`,
-          answer: `${randomUser.last_name}`
+          answer: `${admin.last_name}`
         },
         {
           question: `What is the address of the admin?`,
-          answer: `${randomUser.last_name}`
+          answer: `${admin.last_name}`
         },
         {
           question: `What is the provider number for the admin?`,
-          answer: `${randomUser.last_name}`
+          answer: `${admin.last_name}`
         },
         {
           question: `What is the street address of the admin?`,
-          answer: `${randomUser.last_name}`
+          answer: `${admin.last_name}`
         },
         {
           question: `What is the mobile number of the admin?`,
-          answer: `${randomUser.last_name}`
+          answer: `${admin.last_name}`
         },
         {
           question: `What is the city of the admin?`,
-          answer: `${randomUser.last_name}`
+          answer: `${admin.last_name}`
+        },
+        {
+          question: `What is the password for the ${randomUser.username}, as stored in the server database?`,
+          answer: `${randomUser.password}`
+        },
+        {
+          question: `What is the street address of ${randomUser.username}?`,
+          answer: `${randomUser.user_address.address}`
+        },
+        {
+          question: `What is the mobile number of the admin?`,
+          answer: `${admin.user_address.mobile}`
+        },
+        {
+          question: `What is the city of the admin?`,
+          answer: `${admin.user_address.city}`
+        },
+        {
+          question: `What is the provider number for ${randomUser.username}`,
+          answer: `${admin.last_name}`
+        },
+        {
+          question: `What is the street address of ${randomUser.username}`,
+          answer: `${admin.last_name}`
+        },
+        {
+          question: `What is the mobile number of ${randomUser.username}`,
+          answer: `${admin.last_name}`
+        }
+      ],
+      Paramater_tampering: [
+        {
+          question: `What is the provider number for ${randomUser.username}`,
+          answer: `${admin.last_name}`
+        },
+        {
+          question: `What is the street address of ${randomUser.username}`,
+          answer: `${admin.last_name}`
+        },
+        {
+          question: `What is the mobile number of ${randomUser.username}`,
+          answer: `${admin.last_name}`
+        }
+      ],
+      Admin_Console: [
+        {
+          question: `How many total users are there?`,
+          answer: `${numUsers}`
+        },
+        {
+          question: `What is the password for the ${randomUser.username}, as stored in the server database?`,
+          answer: `${randomUser.password}`
         }
       ]
     }
@@ -366,6 +436,52 @@ async function createQuestionsAndAnswers () {
     console.log('JSON data has been written to file');
   });
   
+}
+
+async function create_and_insert_admin() {
+  const username = Math.random().toString(36).substring(2, 8);
+  let password = Math.random().toString(36).substring(2, 8);
+  switch (encryptionLevel) {
+    case 0:
+      password = password;
+      break;
+    case 1:
+      password = password;
+      break;
+    case 2:
+      password = cipherRot13(password);
+      break;
+    case 3:
+      password = await bcrypt.hash(password, 10);
+      break;
+    default:
+      password = await bcrypt.hash(password, 10);
+      break;
+  }
+
+
+  const first_name = Math.random().toString(36).substring(2, 8);
+  const last_name = Math.random().toString(36).substring(2, 8);
+  const admin = 1;
+  const adminUser = { username, password, first_name, last_name, admin };
+
+  const address = Math.random().toString(36).substring(2, 8);
+  const city = Math.random().toString(36).substring(2, 8);
+  const country = Math.random().toString(36).substring(2, 8);
+  const mobile = generateRandomNumber();
+  const provider = Math.random().toString(36).substring(2, 8);
+  const account_no = Math.random().toString(36).substring(2, 8);
+
+  userAddress = {address, city, country, mobile};
+  userPayment = {provider, account_no};
+
+
+
+  await User.create({ ...adminUser, password: password});
+  await UserAddress.create(userAddress);
+  await UserPayment.create(userPayment);
+
+
 }
 
 async function populateUserAccounts () {
@@ -425,10 +541,10 @@ try {
         passwordPromises.push(Promise.resolve(cipherRot13(password)));
         break;
       case 3:
-        passwordPromises.push(bcrypt.hash(password, 10));
+        passwordPromises.push(Promise.resolve(bcrypt.hash(password, 10)));
         break;
       default:
-        passwordPromises.push(bcrypt.hash(password, 10));
+        passwordPromises.push(Promise.resolve(bcrypt.hash(password, 10)));
         break;
     }
 
@@ -476,6 +592,30 @@ function cipherRot13(str) {
         : (charCode + 13) % 90 + 64
     );
 
+  }
+}
+
+async function getAdminUser() {
+  try {
+    const count = await User.count();
+  
+    console.log("Executing query!")
+    const user = await User.findOne({
+      where: {admin : 1},
+      include: [
+        { model: UserAddress },
+        { model: UserPayment }
+      ],
+      raw: true,
+      nest: true
+    });
+    console.log("admin")
+    console.log(user.user_address.mobile);
+    return user;
+    
+  } catch (err) {
+    console.error(err);
+    throw err;
   }
 }
 

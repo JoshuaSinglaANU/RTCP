@@ -1,62 +1,28 @@
 doctype html
 html
   head
+   head
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    title Login Page
-    style.
-      body {
-        background-color: #f2f2f2;
-        font-family: Arial, sans-serif;
-      }
-      form {
-        max-width: 400px;
-        margin: 100px auto;
-        padding: 20px;
-        background-color: white;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      }
-      h1 {
-        text-align: center;
-        margin-bottom: 30px;
-      }
-      label {
-        display: block;
-        margin-bottom: 10px;
-        font-size: 18px;
-        font-weight: bold;
-      }
-      input[type='text'], input[type='password'] {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        font-size: 16px;
-      }
-      button[type='submit'] {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        background-color: #4CAF50;
-        color: white;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-      button[type='submit']:hover {
-        background-color: #3e8e41;
-      }
-      p {
-        text-align: center;
-        font-size: 18px;
-        margin-top: 30px;
-      }
+    title Welcome
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+    link(rel='stylesheet', href='/public/stylesheets/style.css')
   body
+    nav
+      ul
+        li
+          a(href='/') Home
+        li
+          a(href='/profile') Profile
+        li
+          a(href='/updateProfile') Change Profile
+        li
+          a(href='/searchProducts') Search Products
+        li
+          a(href='/login') Login
+        li
+          a(href='/createAccount') Create Account
+        li
+          a(href='/answer') Answer Questions  
     form(action='/login', method='post')
       h1 Login Page
       div

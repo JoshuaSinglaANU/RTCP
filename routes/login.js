@@ -64,6 +64,7 @@ router.post('/', async function (req, res) {
     var queryResult;
 
     switch (difficulty) {
+      // ' OR 1=1--' SOLUTION
       case 0:
         var query = "SELECT * FROM user WHERE username = '" + req.body.username + "' AND password = '" + req.body.password + "'"
         const [results, metadata] = await sequelize.query(query);
@@ -94,7 +95,7 @@ router.post('/', async function (req, res) {
           req.session.admin = admin;
           req.session.userid = req.body.username;
           if (URLRewrite) {
-            res.redirect('/?sessionID=' + req.sessionID);
+            res.redirect('/?sessionID=' +  req.sessionID);
           } else {
             res.redirect('/');
           }

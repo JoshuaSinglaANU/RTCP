@@ -17,15 +17,21 @@ router.use(session({
 router.get('/', function(req, res) {
     // req.session.generatedQuestions = true;
     var generateQuestions = req.app.get("generatedQuestions");
-    console.log(generateQuestions);
+    var createdQuestions = req.app.get("createdQuestions");
+    console.log(createdQuestions);
    var formFields = [];
    // Generate the form
    if (!generateQuestions) {
-    questions = generateFormFields(formFields);
-    req.app.set("generatedQuestions", true);
+    
+    if (!createdQuestions) {
+      res.redirect("/");
+    } else {
+      questions = generateFormFields(formFields);
+      req.app.set("generatedQuestions", true);
+    }
    }
 
-   console.log(questions);
+   
 
    for (let i = 0; i < 5; i++) {
     formFields.push({label: questions[i].question, name : "Question " + i}) 
@@ -71,24 +77,45 @@ function generateFormFields (formFields) {
         authenticationQuestions = questions.vulnerabilities.Authentication;
         questionPool = questionPool.concat(authenticationQuestions);
     }
+    const URLrewritingDifficulty = difficulties.vulnerabilities[0].URL_rewriting;
+    if (URLrewritingDifficulty == 1) {
+      URLrewritingQuestions = questions.vulnerabilities.URL_rewriting;
+      questionPool = questionPool.concat(URLrewritingQuestions);
+    }
+
+    const XSSDifficulty = difficulties.vulnerabilities[0].XSS;
+
+    if (XSSDifficulty == 1) {
+      XSSQuestions = questions.vulnerabilities.XSS;
+      questionPool = questionPool.concat(XSSQuestions);
+    }
+
+    const ParameterTamperingDifficulty = difficulties.vulnerabilities[0].Paramater_tampering;
+    if (ParameterTamperingDifficulty == 1) {
+      ParameterTamperingQuestions = questions.vulnerabilities.XSS;
+      questionPool = questionPool.concat(ParameterTamperingQuestions);
+    }
+
     const questionsList = getRandomElements(questionPool, 5)
     return questionsList;
 }
 
 function getRandomElements(list, n) {
-    const result = new Array(n);
-    let len = list.length;
-    const taken = new Array(len);
-    if (n > len)
+      if (n > list.length)
       throw new RangeError("getRandomElements: more elements taken than available");
-  
-    while (n--) {
-      const x = Math.floor(Math.random() * len);
-      result[n] = list[x in taken ? taken[x] : x];
-      taken[x] = --len in taken ? taken[len] : len;
+
+    let result = [];
+    let tempArray = [...list]; // Clone the list to a temporary array
+
+    while(n--) {
+      const index = Math.floor(Math.random() * tempArray.length);
+      result.push(tempArray[index]);
+      tempArray.splice(index, 1); // Remove the chosen element from the temp array
     }
     return result;
   }
+
+  //9JXhV3BNvyFqWpZDkNkDiC_yIuzxDWWK
   
   const list = ["apple", "banana", "cherry", "date", "elderberry"];
   const randomElements = getRandomElements(list, 3);

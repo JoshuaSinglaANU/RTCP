@@ -4,10 +4,6 @@
       "Difficulty": [
         [
           {
-            "question": "How many products are there in total?",
-            "answer": "paerqe"
-          },
-          {
             "question": "How many unreleased products are there?",
             "answer": "0"
           },
@@ -27,69 +23,123 @@
         [
           {
             "question": "How many total users are there?",
-            "answer": "10"
+            "answer": "11"
           },
           {
-            "question": "What is the password for the w89dml, as stored in the server database?",
-            "answer": "$2b$10$k3uMDlngI9khvst20js9SehtKAYZhxqXBiPo3Vxufwno.CV.3rJ3K"
+            "question": "What is the password for the on0xqm, as stored in the server database?",
+            "answer": "ywyd9z"
           },
           {
-            "question": "What is the street address of w89dml?",
-            "answer": "rjhx20"
+            "question": "What is the street address of on0xqm?",
+            "answer": "ygjtzq"
           },
           {
             "question": "What is the mobile number of the admin?",
-            "answer": "3348038558"
+            "answer": "9066928660"
           },
           {
             "question": "What is the city of the admin?",
-            "answer": "afg4uj"
+            "answer": "lav98m"
           }
         ]
-      ],
-      "URL_rewriting": [
-        {
-          "question": "What is the current sessionID?",
-          "answer": "paerqe"
-        },
-        {
-          "question": "What is the last name pp885h",
-          "answer": "paerqe"
-        },
-        {
-          "question": "What is the length of the current sessionID?",
-          "answer": "paerqe"
-        },
-        {
-          "question": "How many numerals are there in the current sessionID?",
-          "answer": "paerqe"
-        }
       ]
     },
+    "URL_rewriting": [
+      {
+        "question": "What is the current sessionID?",
+        "answer": "ympYvS5sKcH40powTYzST8Ee6AjIdiNV"
+      },
+      {
+        "question": "What is the length of the current sessionID?",
+        "answer": "32"
+      }
+    ],
+    "XSS": [
+      {
+        "question": "What is the current sessionID?",
+        "answer": "ympYvS5sKcH40powTYzST8Ee6AjIdiNV"
+      },
+      {
+        "question": "What is the length of the current sessionID?",
+        "answer": "32"
+      }
+    ],
     "Authentication": [
       {
         "question": "What is the password for the admin user, as stored in the server database?",
-        "answer": "paerqe"
+        "answer": "sljpte"
       },
       {
         "question": "What is the address of the admin?",
-        "answer": "paerqe"
+        "answer": "sljpte"
       },
       {
         "question": "What is the provider number for the admin?",
-        "answer": "paerqe"
+        "answer": "sljpte"
       },
       {
         "question": "What is the street address of the admin?",
-        "answer": "paerqe"
+        "answer": "sljpte"
       },
       {
         "question": "What is the mobile number of the admin?",
-        "answer": "paerqe"
+        "answer": "sljpte"
       },
       {
         "question": "What is the city of the admin?",
-        "answer": "paerqe"
+        "answer": "sljpte"
+      },
+      {
+        "question": "What is the password for the on0xqm, as stored in the server database?",
+        "answer": "ywyd9z"
+      },
+      {
+        "question": "What is the street address of on0xqm?",
+        "answer": "ygjtzq"
+      },
+      {
+        "question": "What is the mobile number of the admin?",
+        "answer": "9066928660"
+      },
+      {
+        "question": "What is the city of the admin?",
+        "answer": "lav98m"
+      },
+      {
+        "question": "What is the provider number for on0xqm",
+        "answer": "sljpte"
+      },
+      {
+        "question": "What is the street address of on0xqm",
+        "answer": "sljpte"
+      },
+      {
+        "question": "What is the mobile number of on0xqm",
+        "answer": "sljpte"
+      }
+    ],
+    "Paramater_tampering": [
+      {
+        "question": "What is the provider number for on0xqm",
+        "answer": "sljpte"
+      },
+      {
+        "question": "What is the street address of on0xqm",
+        "answer": "sljpte"
+      },
+      {
+        "question": "What is the mobile number of on0xqm",
+        "answer": "sljpte"
+      }
+    ],
+    "Admin_Console": [
+      {
+        "question": "How many total users are there?",
+        "answer": "11"
+      },
+      {
+        "question": "What is the password for the on0xqm, as stored in the server database?",
+        "answer": "ywyd9z"
       }
     ]
   }
