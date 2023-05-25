@@ -1,21 +1,60 @@
-# RTCP
-Red Team Cyber Puzzles
+# Red Team Cyber Puzzles
 
-# Description
-Right now, this is a very basic web application. There is a basic front-end file (index.jade) that acts as a login.
-There is a SQL database that holds the user data. Very simple authentication has been implemented to test the client-server-database model.
-So far, the frameworks have been set up and decided.
+'Red Team Cyber Puzzles' is a fun, educational, capture-the-flag style quiz generator. This NodeJS Express application is designed to educate about web security in an engaging and interactive way.
 
-## Frameworks
-- ExpressJS as the back-end that handles client requests
-- Sequelize as an ORM to make working with the SQL database easier
-- Sqlite as the DBMS
-- Was a learning curve to have understand/integrate all the frameworks
+## Prerequisites
 
-## Statement of Work
-https://1drv.ms/w/s!AsvooU5loRT1hqkLyUOF82DWOTiLPw?e=geHee2
+Before you begin, ensure you have met the following requirements:
 
-## Milestones
-- The first milestone (creating a web application) was late
-- This was caused because I expected to do too much work in a short period of time
-- Should reflect on later milestones
+* You have installed Node.js version 14.7.0
+* You have a Windows, Linux, or macOS machine.
+
+## Installing Red Team Cyber Puzzles
+
+To install Red Team Cyber Puzzles, follow these steps:
+
+1. Clone the repository:
+
+    ```
+    git clone https://github.com/yourusername/red-team-cyber-puzzles.git
+    ```
+
+2. Navigate into the project directory:
+
+    ```
+    cd red-team-cyber-puzzles
+    ```
+
+3. Install the dependencies:
+
+    ```
+    npm install
+    ```
+
+## Configuring Red Team Cyber Puzzles
+
+Configuration of vulnerabilities can be performed in the `config.json` file. Questions can be manually added to the `questions.json` file.
+
+## Using Red Team Cyber Puzzles
+
+To use Red Team Cyber Puzzles, run the following command:
+    ```
+    node app.js
+    ```
+    
+By default, the application runs on port 40008 of your localhost server.
+
+## Contributing to Red Team Cyber Puzzles
+
+We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
+
+* Reporting a bug
+* Discussing the current state of the code
+* Submitting a fix
+* Proposing new features
+
+Pull requests are the best way to propose changes. We actively welcome your pull requests.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)    
