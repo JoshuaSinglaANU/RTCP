@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    title  Login Page 
+    link(rel='stylesheet', href='../public/stylesheets/style.css')
+  body
+    nav
+      ul
+        li
+          a(href='/') Home
+        li
+          a(href='/profile') Profile
+        li
+          a(href='/updateProfile') Change Profile
+        li
+          a(href='/searchProducts') Search Products
+        li
+          a(href='/login') Login
+        li
+          a(href='/createAccount') Create Account
+        li
+          a(href='/answer') Answer Questions   
+
+    form(action='/updateProfile', method='post')
+      div
+        input(type="hidden", name="_csrf", value=csrfToken)
+        label Username : 
+        input(type='text' placeholder='Enter Username' name='username' required='')
+        input(type='hidden' id='sessionID' value="<%= sessionId %>")  
+        button(type='submit') Login

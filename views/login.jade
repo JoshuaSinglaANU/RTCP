@@ -1,16 +1,35 @@
 doctype html
 html
   head
-    meta(name='viewport' content='width=device-width, initial-scale=1')
-    title  Login Page 
+   head
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title Welcome
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css')
+    link(rel='stylesheet', href='/public/stylesheets/style.css')
   body
-    form(action='/', method='post')
+    nav
+      ul
+        li
+          a(href='/') Home
+        li
+          a(href='/profile') Profile
+        li
+          a(href='/updateProfile') Change Profile
+        li
+          a(href='/searchProducts') Search Products
+        li
+          a(href='/login') Login
+        li
+          a(href='/createAccount') Create Account
+        li
+          a(href='/answer') Answer Questions  
+    form(action='/login', method='post')
+      h1 Login Page
       div
-        label Username : 
-        input(type='text' placeholder='Enter Username' name='username' required='')
-        label Password : 
-        input(type='password' placeholder='Enter Password' name='password' required='')
+        label(for='username') Username:
+        input(type='text', id='username', name='username', placeholder='Enter Username', required='')
+        label(for='password') Password:
+        input(type='password', id='password', name='password', placeholder='Enter Password', required='')
         button(type='submit') Login
-  p= "Username: " + (username || "")
-  p= "Password: " + (password || "")
-  p= "Login outcome: " + (outcome || "")       
+    if outcome
+      p Login outcome: #{outcome}

@@ -6,14 +6,30 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
+    "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
     "cookie-session": "^2.0.0",
+    "crypto": "^1.0.1",
+    "csurf": "^1.11.0",
     "debug": "~2.6.9",
-    "express": "~4.16.1",
+    "express": "^4.16.4",
+    "express-admin": "^2.0.0",
+    "express-fileupload": "^1.4.0",
     "express-session": "^1.17.3",
-    "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1",
-    "sqlite-browser": "^0.1.1"
+    "file-type": "^18.3.0",
+    "http-errors": "^1.6.3",
+    "jade": "^1.11.0",
+    "jsonwebtoken": "^9.0.0",
+    "mmmagic": "^0.5.3",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.5-lts.1",
+    "sequelize": "^6.31.0",
+    "serve-index": "^1.9.1",
+    "sqlite-browser": "^0.1.1",
+    "sqlite3": "^5.1.6",
+    "xss": "^1.0.14"
+  },
+  "devDependencies": {
+    "esm": "^3.2.25"
   }
 }
